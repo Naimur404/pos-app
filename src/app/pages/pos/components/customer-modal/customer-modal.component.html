@@ -1,0 +1,52 @@
+<ion-modal
+  [isOpen]="isOpen"
+  (didDismiss)="closeModal()"
+  [breakpoints]="[0, 0.5, 0.8, 1]"
+  [initialBreakpoint]="0.8"
+  class="custom-modal">
+  <ng-template>
+    <ion-header class="ion-no-border">
+      <ion-toolbar class="modal-header">
+        <ion-title>Select Customer</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal()">
+            <ion-icon name="close-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <ion-toolbar>
+        <ion-searchbar
+          [value]="searchCustomer"
+          placeholder="Search by name or phone..."
+          (ionInput)="onSearchChange($event)"
+          class="custom-searchbar">
+        </ion-searchbar>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="modal-content">
+      <ion-list class="customer-list">
+        <ion-item *ngFor="let customer of customersList" (click)="selectCustomer(customer)" lines="full" class="customer-item">
+          <ion-avatar slot="start">
+            <ion-icon name="person-circle-outline" size="large" color="primary"></ion-icon>
+          </ion-avatar>
+          <ion-label>
+            <h2 class="customer-name">{{ customer.name }}</h2>
+            <p>{{ customer.phone }}</p>
+            <p>{{ customer.address }}</p>
+          </ion-label>
+          <ion-chip slot="end" color="primary" class="points-chip">
+            {{ customer.points }} Points
+          </ion-chip>
+        </ion-item>
+      </ion-list>
+
+      <div class="ion-padding">
+        <ion-button expand="block" (click)="openNewCustomerModal()" class="add-customer-btn">
+          <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+          Add New Customer
+        </ion-button>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

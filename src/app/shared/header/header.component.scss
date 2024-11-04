@@ -1,0 +1,115 @@
+/* Modern header styling */
+ion-header {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(var(--ion-color-primary-rgb), 0.95);
+}
+
+ion-toolbar {
+  --background: transparent;
+  --min-height: 70px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Title styling */
+ion-title {
+  font-weight: 700;
+  font-size: 1.5rem;
+  background: linear-gradient(45deg, #ffffff, #f0f0f0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Button container styling */
+ion-buttons {
+  gap: 8px;
+  padding-right: 12px;
+}
+
+/* Base button styles */
+.custom-button {
+  height: 40px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Solid buttons (POS & Invoices) */
+.custom-button[fill="solid"] {
+  --background: rgba(255, 255, 255, 0.15);
+  --color: white;
+  --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.custom-button[fill="solid"]:hover {
+  --background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Logout button */
+.custom-button[fill="clear"] {
+  --color: rgba(255, 255, 255, 0.9);
+  --background: transparent;
+  font-weight: 500;
+}
+
+.custom-button[fill="clear"]:hover {
+  --background: rgba(255, 255, 255, 0.1);
+  --color: white;
+}
+
+/* Icon styling */
+ion-icon {
+  font-size: 18px;
+  margin-right: 6px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  ion-toolbar {
+    --min-height: 60px;
+  }
+
+  .custom-button {
+    height: 36px;
+    --padding-start: 12px;
+    --padding-end: 12px;
+  }
+
+  ion-title {
+    font-size: 1.25rem;
+  }
+}
+
+/* Button animation */
+@keyframes buttonPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.custom-button:active {
+  animation: buttonPop 0.2s ease;
+}
+
+/* Glass morphism effect for buttons */
+.custom-button[fill="solid"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}

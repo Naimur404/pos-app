@@ -1,0 +1,122 @@
+/* Modal wrapper styles */
+.modal-wrapper {
+  --height: 80%;
+  --width: 90%;
+  --max-width: 600px;
+  --border-radius: 12px;
+  --backdrop-opacity: 0.4;
+}
+
+/* Header styling */
+ion-header {
+  background: var(--ion-background-color);
+}
+
+ion-toolbar {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --min-height: 56px;
+}
+
+ion-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ion-text-color);
+}
+
+/* Close button styling */
+ion-button {
+  --padding-start: 12px;
+  --padding-end: 12px;
+  font-weight: 500;
+}
+
+/* Search bar customization */
+ion-searchbar {
+  --box-shadow: none;
+  --background: var(--ion-color-light);
+  --border-radius: 8px;
+  --placeholder-color: var(--ion-color-medium);
+  --icon-color: var(--ion-color-medium);
+  padding: 0 12px;
+  margin: 8px 0;
+}
+
+/* Content area styling */
+ion-content {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+}
+
+/* List item styling */
+ion-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  --background-hover: var(--ion-color-light);
+  --ripple-color: var(--ion-color-primary-rgb, 0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+ion-item:last-child {
+  --border-width: 0;
+}
+
+/* Product information styling */
+ion-label h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ion-text-color);
+  margin-bottom: 4px;
+}
+
+ion-label p {
+  font-size: 0.875rem;
+  color: var(--ion-color-medium);
+  margin: 2px 0;
+}
+
+/* Badge styling */
+ion-badge {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --padding-top: 4px;
+  --padding-bottom: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .modal-wrapper {
+    --width: 70%;
+    --max-width: 800px;
+  }
+
+  ion-title {
+    font-size: 1.3rem;
+  }
+
+  ion-label h2 {
+    font-size: 1.1rem;
+  }
+
+  ion-label p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  ion-searchbar {
+    --background: rgba(var(--ion-color-light-rgb), 0.1);
+  }
+
+  ion-item {
+    --background-hover: rgba(var(--ion-color-light-rgb), 0.1);
+  }
+}

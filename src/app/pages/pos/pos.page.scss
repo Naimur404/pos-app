@@ -1,0 +1,405 @@
+:root {
+  --ion-color-primary: #007AFF;
+  --ion-color-success: #34C759;
+  --ion-color-danger: #FF3B30;
+  --ion-color-medium: #8E8E93;
+  --ion-background-color: #F2F2F7;
+  --ion-text-color: #000000;
+  --ion-border-color: #C6C6C8;
+  --header-height: 56px;
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --card-border-radius: 28px;
+  --button-height: 44px;
+  --input-border-radius: 24px;
+}
+
+/* Page Layout */
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  padding-bottom: var(--safe-area-bottom);
+}
+
+app-header {
+  flex-shrink: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+}
+
+/* Scrollable Content */
+.scrollable-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px;
+  background-color: var(--ion-background-color);
+  padding-bottom: calc(16px + var(--safe-area-bottom) + 60px);
+}
+
+/* Cards */
+ion-card {
+  border-radius: var(--card-border-radius) !important;
+  margin: 16px 0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  background: #FFFFFF;
+  padding: 0;
+  overflow: hidden;
+  border: none !important;
+  outline: none !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.customer-card {
+  margin-top: 0;
+}
+
+/* Round the first and last items in cards */
+ion-card ion-item:first-child {
+  --border-radius: var(--card-border-radius) var(--card-border-radius) 0 0;
+}
+
+ion-card ion-item:last-child {
+  --border-radius: 0 0 var(--card-border-radius) var(--card-border-radius);
+}
+
+/* Customer Section */
+.customer-card ion-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-end: 16px;
+  --background: transparent;
+  --border-style: none;
+  --border-width: 0;
+  --border-color: transparent;
+  --highlight-color-focused: transparent;
+  --highlight-color-valid: transparent;
+  --highlight-color-invalid: transparent;
+}
+
+ion-avatar {
+  width: 40px;
+  height: 40px;
+  --border-radius: 20px;
+  background: var(--ion-color-primary);
+  margin-right: 16px;
+}
+
+ion-avatar ion-icon {
+  font-size: 28px;
+  color: #FFFFFF;
+}
+
+ion-chip {
+  height: 28px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 8px;
+  border-radius: 14px;
+  border: none;
+}
+
+/* Product Section */
+ion-list {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  border-radius: var(--card-border-radius);
+  overflow: hidden;
+}
+
+ion-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-end: 16px;
+  --background: transparent;
+  --border-style: none;
+  --border-width: 0;
+  --border-color: transparent;
+  --highlight-color-focused: transparent;
+  --highlight-color-valid: transparent;
+  --highlight-color-invalid: transparent;
+  width: 100%;
+}
+
+/* Improved Input Fields */
+ion-input, ion-textarea {
+  --background: #F5F5F5;
+  --padding-start: 20px !important;
+  --padding-end: 20px !important;
+  --padding-top: 12px !important;
+  --padding-bottom: 12px !important;
+  --border-radius: var(--input-border-radius) !important;
+  --highlight-color-focused: var(--ion-color-primary);
+  --highlight-color-valid: var(--ion-color-success);
+  --highlight-color-invalid: var(--ion-color-danger);
+  margin: 8px 0;
+  border-radius: var(--input-border-radius);
+  font-size: 16px !important;
+  --placeholder-color: var(--ion-color-medium);
+  --placeholder-opacity: 0.7;
+  height: 48px;
+}
+
+ion-input.has-focus, ion-textarea.has-focus {
+  --background: #FFFFFF;
+  box-shadow: 0 0 0 2px var(--ion-color-primary);
+}
+
+/* Grid Layout */
+ion-grid {
+  width: 100%;
+  padding: 0;
+}
+
+ion-row {
+  width: 100%;
+  align-items: center;
+}
+
+/* Product Info Column */
+ion-col[size="6"] ion-label {
+  margin: 12px 0;
+}
+
+ion-col[size="6"] h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+  color: var(--ion-text-color);
+}
+
+ion-col[size="6"] p {
+  font-size: 14px;
+  color: var(--ion-color-medium);
+  margin: 0;
+}
+
+/* Quantity Controls */
+ion-col[size="4"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+ion-col[size="4"] ion-button {
+  --padding-start: 4px;
+  --padding-end: 4px;
+  height: 36px;
+  width: 36px;
+  margin: 0;
+  --box-shadow: none;
+  --border-width: 0;
+}
+
+ion-col[size="4"] span {
+  display: inline-block;
+  min-width: 24px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 4px;
+}
+
+/* Remove Button Column */
+ion-col[size="2"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ion-col[size="2"] ion-button {
+  --padding-start: 4px;
+  --padding-end: 4px;
+  height: 36px;
+  width: 36px;
+  margin: 0;
+}
+
+/* Buttons */
+ion-button {
+  --border-radius: 12px;
+  height: var(--button-height);
+  font-weight: 500;
+  flex-shrink: 0;
+  --box-shadow: none;
+  --border-width: 0;
+}
+
+ion-button[expand="block"] {
+  margin: 16px;
+}
+
+ion-button[fill="outline"] {
+  --border-color: var(--ion-color-primary);
+  --border-width: 1px;
+  --background-activated: rgba(0, 122, 255, 0.1);
+}
+
+ion-button[fill="clear"] {
+  --color: var(--ion-color-primary);
+  --background-activated: transparent;
+}
+
+ion-button ion-icon {
+  font-size: 20px;
+}
+
+/* Select Field */
+ion-select {
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  background: #F5F5F5;
+  border-radius: var(--input-border-radius);
+  margin: 8px 0;
+  max-width: 100%;
+  font-size: 16px;
+  height: 48px;
+}
+
+ion-select::part(placeholder) {
+  color: var(--ion-color-medium);
+  opacity: 0.7;
+}
+
+ion-select.has-focus {
+  background: #FFFFFF;
+  box-shadow: 0 0 0 2px var(--ion-color-primary);
+}
+
+/* Search Bar */
+ion-searchbar {
+  --border-radius: var(--input-border-radius) !important;
+  --box-shadow: none;
+  --background: #F5F5F5;
+  padding: 0;
+  height: 48px;
+}
+
+/* Labels */
+ion-label {
+  margin: 12px 0;
+}
+
+ion-label[position="stacked"] {
+  margin-bottom: 8px;
+  color: var(--ion-color-medium);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+ion-label h2 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ion-text-color);
+  margin: 0;
+}
+
+/* Payment Section */
+ion-text[slot="end"] {
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.ion-padding {
+  padding: 16px;
+}
+
+/* Modal Styling */
+app-product-modal,
+app-customer-modal {
+  --height: 90%;
+  --border-radius: var(--card-border-radius);
+}
+
+/* Card Content */
+ion-card-content {
+  padding: 16px;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-background-color: #000000;
+    --ion-text-color: #FFFFFF;
+    --ion-border-color: #3A3A3C;
+  }
+
+  ion-card {
+    background: #1C1C1E;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  ion-input, ion-textarea, ion-select, ion-searchbar {
+    --background: #2C2C2E;
+  }
+
+  ion-input.has-focus, ion-textarea.has-focus, ion-select.has-focus {
+    --background: #3A3A3C;
+  }
+
+  ion-label p {
+    color: #8E8E93;
+  }
+
+  app-header {
+    background-color: rgba(0, 0, 0, 0.95);
+  }
+}
+
+/* iOS Safe Area Support */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .scrollable-content {
+    padding-bottom: calc(16px + env(safe-area-inset-bottom) + 60px);
+  }
+
+  :host {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Hover Effects */
+@media (hover: hover) {
+  ion-button:hover {
+    opacity: 0.8;
+  }
+
+  ion-button[color="danger"]:hover {
+    opacity: 0.8;
+  }
+
+  ion-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  ion-input:hover, ion-textarea:hover, ion-select:hover, ion-searchbar:hover {
+    --background: #EFEFEF;
+  }
+
+  .dark ion-input:hover,
+  .dark ion-textarea:hover,
+  .dark ion-select:hover,
+  .dark ion-searchbar:hover {
+    --background: #3A3A3C;
+  }
+}
+
+/* Currency Symbol Style */
+ion-text[slot="end"]::before {
+  margin-right: 2px;
+}
+.test-class {
+  border-bottom: 1px solid black;
+}
+

@@ -1,0 +1,56 @@
+.custom-modal {
+  --height: 90%;
+  --border-radius: 20px;
+}
+
+.custom-modal::part(content) {
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.modal-header {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-primary-contrast);
+  border-radius: 20px 20px 0 0;
+}
+
+.modal-header ion-title {
+  font-weight: bold;
+}
+
+.custom-searchbar {
+  --border-radius: 10px;
+  --box-shadow: none;
+  margin: 10px;
+}
+
+.customer-list {
+  margin-top: 10px;
+}
+
+.customer-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  --background-hover: var(--ion-color-light);
+  transition: background-color 0.3s;
+}
+
+.customer-name {
+  font-weight: 600;
+  color: var(--ion-color-dark);
+}
+
+.points-chip {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-primary-contrast);
+  font-weight: 600;
+}
+
+.add-customer-btn {
+  margin: 16px;
+  --border-radius: 10px;
+  text-transform: none;
+  font-weight: 600;
+}

@@ -1,0 +1,176 @@
+<!-- invoice-details.page.html -->
+
+<app-header [user]="user" [title] ="''" [showInvoiceButton]="false" [showPosButton]="true" [showInvoiceDetails]="true" [backButton]="true" ></app-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="error" class="error-message">
+    <ion-text color="danger">
+      <p>{{ error }}</p>
+    </ion-text>
+  </div>
+
+  <div *ngIf="invoiceDetails" class="invoice-container">
+    <!-- Invoice Header -->
+    <ion-card>
+      <ion-card-header>
+        <div class="invoice-header">
+          <ion-card-title>Invoice #{{ invoiceDetails.salesReturn.id }}</ion-card-title>
+          <ion-card-subtitle>{{ invoiceDetails.salesReturn.sale_date | date:'mediumDate' }}</ion-card-subtitle>
+        </div>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="payment-info">
+          <ion-chip [color]="invoiceDetails.salesReturn.payment_method_id === 1 ? 'success' : 'primary'">
+            <ion-icon name="wallet-outline"></ion-icon>
+            <ion-label>{{ getPaymentMethodName(invoiceDetails.salesReturn.payment_method_id) }}</ion-label>
+          </ion-chip>
+        </div>
+
+        <!-- Amount Summary -->
+        <ion-grid class="amount-summary">
+          <ion-row>
+            <ion-col size="6">
+              <ion-text color="medium">
+                <p>Sub Total:</p>
+              </ion-text>
+            </ion-col>
+            <ion-col size="6" class="ion-text-end">
+              <ion-text>
+                <p>৳{{ invoiceDetails.salesReturn.sub_total }}</p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="6">
+              <ion-text color="medium">
+                <p>VAT:</p>
+              </ion-text>
+            </ion-col>
+            <ion-col size="6" class="ion-text-end">
+              <ion-text>
+                <p>৳{{ invoiceDetails.salesReturn.vat }}</p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="6">
+              <ion-text color="medium">
+                <p>Delivery Charge:</p>
+              </ion-text>
+            </ion-col>
+            <ion-col size="6" class="ion-text-end">
+              <ion-text>
+                <p>৳{{ invoiceDetails.salesReturn.delivery_charge }}</p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="6">
+              <ion-text color="medium">
+                <p>Discount:</p>
+              </ion-text>
+            </ion-col>
+            <ion-col size="6" class="ion-text-end">
+              <ion-text>
+                <p>৳{{ invoiceDetails.salesReturn.total_discount }}</p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="total-row">
+            <ion-col size="6">
+              <ion-text>
+                <p><strong>Grand Total:</strong></p>
+              </ion-text>
+            </ion-col>
+            <ion-col size="6" class="ion-text-end">
+              <ion-text>
+                <p><strong>৳{{ invoiceDetails.salesReturn.grand_total }}</strong></p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="6">
+              <ion-text color="medium">
+                <p>Given Amount:</p>
+              </ion-text>
+            </ion-col>
+            <ion-col size="6" class="ion-text-end">
+              <ion-text>
+                <p>৳{{ invoiceDetails.salesReturn.given_amount }}</p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="6">
+              <ion-text color="medium">
+                <p>Change:</p>
+              </ion-text>
+            </ion-col>
+            <ion-col size="6" class="ion-text-end">
+              <ion-text>
+                <p>৳{{ invoiceDetails.salesReturn.given_amount - invoiceDetails.salesReturn.paid_amount }}</p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Products List -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Products</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="products-list">
+          <ion-item *ngFor="let item of invoiceDetails.saleDetails" lines="full">
+            <ion-label>
+              <h2>{{ item.medicine_name }}</h2>
+              <p>Size: {{ item.size }}</p>
+              <ion-grid class="product-details">
+                <ion-row>
+                  <ion-col size="4">
+                    <ion-text color="medium">
+                      <small>Qty: {{ item.quantity }}</small>
+                    </ion-text>
+                  </ion-col>
+                  <ion-col size="4">
+                    <ion-text color="medium">
+                      <small>Rate: ৳{{ item.rate }}</small>
+                    </ion-text>
+                  </ion-col>
+                  <ion-col size="4" class="ion-text-end">
+                    <ion-text>
+                      <strong>৳{{ item.total_price }}</strong>
+                    </ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-label>
+          </ion-item>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Points Information -->
+    <ion-card *ngIf="invoiceDetails.salesReturn.earn_point > 0">
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-icon name="star" slot="start" color="warning"></ion-icon>
+          <ion-label>
+            <h2>Points Earned</h2>
+            <p>{{ invoiceDetails.salesReturn.earn_point }} points</p>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

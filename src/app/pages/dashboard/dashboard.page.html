@@ -1,0 +1,142 @@
+<ion-content>
+  <app-header  [title] ="'Dashboard'" [showInvoiceButton]="true" [showPosButton]="true" [showInvoiceDetails]="false" [dashboardButton] = "false" ></app-header>
+  <ng-container *ngIf="isLoading">
+    <div class="ion-padding">
+      <ion-grid>
+        <!-- Overview Cards Skeleton -->
+        <ion-row>
+          <ion-col size="6" size-md="3" *ngFor="let item of [1,2,3,4]">
+            <ion-card class="stat-card">
+              <ion-card-content>
+                <div class="card-content-skeleton">
+                  <ion-skeleton-text [animated]="true" class="icon-skeleton"></ion-skeleton-text>
+                  <div class="text-skeleton">
+                    <ion-skeleton-text [animated]="true" style="width: 60%"></ion-skeleton-text>
+                    <ion-skeleton-text [animated]="true" style="width: 40%"></ion-skeleton-text>
+                  </div>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <!-- Summary Cards Skeleton -->
+        <ion-row>
+          <ion-col size="12" size-md="6" *ngFor="let item of [1,2]">
+            <ion-card class="summary-card">
+              <ion-card-header>
+                <ion-skeleton-text [animated]="true" style="width: 40%; height: 20px;"></ion-skeleton-text>
+              </ion-card-header>
+              <ion-card-content>
+                <div class="summary-skeleton-item" *ngFor="let stat of [1,2]">
+                  <div>
+                    <ion-skeleton-text [animated]="true" style="width: 120px; height: 16px;"></ion-skeleton-text>
+                    <ion-skeleton-text [animated]="true" style="width: 80px; height: 24px;"></ion-skeleton-text>
+                  </div>
+                  <ion-skeleton-text [animated]="true" style="width: 24px; height: 24px;"></ion-skeleton-text>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ng-container>
+
+  <!-- Actual Content -->
+  <div class="ion-padding" *ngIf="!isLoading">
+
+
+
+
+    <ng-container *ngIf="!isLoading">
+      <ion-grid>
+        <!-- Overview Cards Row -->
+        <ion-row>
+          <!-- Now showing 2 cards per row on mobile -->
+          <ion-col size="6" size-md="3">
+            <app-stat-card
+              title="Customers"
+              [value]="dashboardData.customers"
+              icon="people-outline"
+              colorClass="primary">
+            </app-stat-card>
+          </ion-col>
+
+          <ion-col size="6" size-md="3">
+            <app-stat-card
+              title="Products"
+              [value]="dashboardData.products"
+              icon="cube-outline"
+              colorClass="success">
+            </app-stat-card>
+          </ion-col>
+
+          <ion-col size="6" size-md="3">
+            <app-stat-card
+              title="Stocks"
+              [value]="dashboardData.stocks"
+              icon="inventory-outline"
+              colorClass="warning">
+            </app-stat-card>
+          </ion-col>
+
+          <ion-col size="6" size-md="3">
+            <app-stat-card
+              title="T Sale"
+              [value]="dashboardData.sales"
+              icon="cash-outline"
+              colorClass="tertiary"
+              prefix="৳">
+            </app-stat-card>
+          </ion-col>
+        </ion-row>
+
+        <!-- Summary Cards Row -->
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <app-stat-summary-card
+              title="Monthly Overview"
+              [stats]="[
+                {
+                  title: 'This Month\'s Sales',
+                  value: dashboardData.this_month_sales,
+                  icon: 'trending-up-outline',
+                  color: 'success',
+                  prefix: '৳'
+                },
+                {
+                  title: 'This Month\'s Invoices',
+                  value: dashboardData.this_month_invoices,
+                  icon: 'receipt-outline',
+                  color: 'primary'
+                }
+              ]">
+            </app-stat-summary-card>
+          </ion-col>
+
+          <ion-col size="12" size-md="6">
+            <app-stat-summary-card
+              title="Daily Overview"
+              [stats]="[
+                {
+                  title: 'Last Day Sales',
+                  value: dashboardData.last_day_sales,
+                  icon: 'bar-chart-outline',
+                  color: 'warning',
+                  prefix: '৳'
+                },
+                {
+                  title: 'Total Invoices',
+                  value: dashboardData.invoices,
+                  icon: 'document-text-outline',
+                  color: 'tertiary'
+                }
+              ]">
+            </app-stat-summary-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ng-container>
+  </div>
+</ion-content>

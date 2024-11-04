@@ -1,0 +1,140 @@
+<app-header [user]='user' [title] ="''" [showInvoiceButton]="true" [showPosButton]="false" [showInvoiceDetails]="false" ></app-header>
+
+<div class="scrollable-content">
+  <!-- Customer Section -->
+  <ion-card class="customer-card" *ngIf="selectedCustomer">
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <ion-icon name="person-circle-outline" size="large"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ selectedCustomer.name }}</h2>
+        <p>{{ selectedCustomer.phone }}</p>
+      </ion-label>
+      <ion-chip slot="end" color="primary">
+        {{ selectedCustomer.points }} Points
+      </ion-chip>
+      <ion-button fill="clear" slot="end" (click)="clearCustomer()">
+        <ion-icon name="close-circle-outline" color="medium"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Redeem Points</ion-label>
+      <ion-input [(ngModel)]="redeemedPoints" type="number"></ion-input>
+      <ion-button fill="clear" slot="end" (click)="redeemPoints()">Redeem</ion-button>
+    </ion-item>
+  </ion-card>
+
+  <!-- Select Customer Button -->
+  <ion-card>
+    <ion-button expand="block" fill="outline" class="ion-margin" (click)="openCustomerModal()">
+      <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+      Select Customer
+    </ion-button>
+  </ion-card>
+
+  <!-- Products Section -->
+  <ion-card>
+    <ion-button expand="block" fill="outline" class="ion-margin" (click)="openProductModal()">
+      <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+      Select Product
+    </ion-button>
+
+    <ion-list>
+      <ion-item *ngFor="let product of selectedProducts; let i = index">
+        <ion-grid class="test-class" >
+          <ion-row class="ion-align-items-center">
+            <ion-col size="6">
+              <ion-label>
+                <h3>{{ product.name }} ({{ product.size }})</h3>
+                <p>Price: {{ product.price }} | Stock: {{ product.stock }}</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="4" class="ion-text-center">
+              <ion-button fill="clear" (click)="updateQuantity(product, false)">
+                <ion-icon name="remove-circle-outline"></ion-icon>
+              </ion-button>
+              <span>{{ product.quantity }}</span>
+              <ion-button fill="clear" (click)="updateQuantity(product, true)">
+                <ion-icon name="add-circle-outline"></ion-icon>
+              </ion-button>
+            </ion-col>
+            <ion-col size="2">
+              <ion-button fill="clear" color="danger" (click)="removeProduct(i)">
+                <ion-icon name="close-circle-outline"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <!-- Totals and Payment -->
+  <ion-card>
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Flat Discount</ion-label>
+        <ion-input [(ngModel)]="flatDiscount" type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Discount(%)</ion-label>
+        <ion-input [(ngModel)]="discountPercentage" type="number"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Sub Total</ion-label>
+        <ion-text slot="end" color="medium">৳{{ subTotal }}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label>Payable Amount</ion-label>
+        <ion-text slot="end" color="primary">৳{{ payableAmount }}</ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Given Amount</ion-label>
+        <ion-input [(ngModel)]="givenAmount" type="number" placeholder="Enter amount given by customer"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Change to Return</ion-label>
+        <ion-text slot="end" [color]="changeToReturn >= 0 ? 'success' : 'danger'">
+          ৳{{ changeToReturn >= 0 ? changeToReturn : '0' }}
+        </ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label>Payment Type</ion-label>
+        <ion-select [(ngModel)]="paymentType">
+          <ion-select-option value="Cash">Cash</ion-select-option>
+          <ion-select-option value="Card">Card</ion-select-option>
+          <ion-select-option value="Mobile Banking">Mobile Banking</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <div class="ion-padding">
+      <ion-button expand="block" (click)="validateAndSubmit()" [disabled]="selectedProducts.length === 0">
+        Complete Sale
+      </ion-button>
+    </div>
+  </ion-card>
+</div>
+
+<!-- Modals -->
+<app-product-modal
+  [isOpen]="isProductModalOpen"
+  [productsList]="productsList"
+  [searchProduct]="searchProduct"
+  (modalClose)="isProductModalOpen = false"
+  (searchChange)="onSearchProductChange($event)"
+  (productSelected)="addProduct($event)">
+</app-product-modal>
+
+<app-customer-modal
+  [isOpen]="isCustomerModalOpen"
+  [customersList]="customersList"
+  [searchCustomer]="searchCustomer"
+  (modalClose)="isCustomerModalOpen = false"
+  (searchChange)="onSearchCustomerChange($event)"
+  (customerSelected)="selectCustomer($event)">
+</app-customer-modal>

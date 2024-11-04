@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button  *ngIf="backButton" defaultHref="/invoices"></ion-back-button>
+    </ion-buttons>
+    <ion-title size="large">{{ user?.name || title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        *ngIf="showPosButton"
+        size="small"
+        class="ion-margin custom-button"
+        fill="solid"
+        color="secondary"
+        (click)="goToPos()">
+        <ion-icon name="receipt-outline" slot="start"></ion-icon>
+        POS
+      </ion-button>
+      <ion-button
+      *ngIf="dashboardButton"
+      size="small"
+      class="ion-margin custom-button"
+      fill="solid"
+      color="secondary"
+      (click)="goToIdashboard()">
+      <ion-icon name="bar-chart-outline"></ion-icon>
+
+    </ion-button>
+      <ion-button
+        *ngIf="showInvoiceButton"
+        size="small"
+        class="ion-margin custom-button"
+        fill="solid"
+        color="secondary"
+        (click)="goToInvoices()">
+        <ion-icon name="document-outline" slot="start"></ion-icon>
+
+      </ion-button>
+
+        <ion-button *ngIf="showInvoiceDetails" (click)="printInvoice()">
+          <ion-icon name="print-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+
+
+      <ion-button
+        fill="clear"
+        color="light"
+        class="ion-margin custom-button"
+        (click)="handleLogout()">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        <span class="ion-hide-sm-down">Logout</span>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

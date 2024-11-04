@@ -1,0 +1,58 @@
+<ion-content class="ion-padding">
+  <div class="login-container">
+    <!-- Logo Section -->
+    <div class="logo-section">
+      <ion-icon name="person-circle-outline" class="logo-icon"></ion-icon>
+      <h1 class="title">Welcome Back</h1>
+      <p class="subtitle">Sign in to continue</p>
+    </div>
+
+    <!-- Login Card -->
+    <ion-card class="login-card">
+      <ion-card-content>
+        <form (ngSubmit)="handleLogin()" #loginForm="ngForm">
+          <!-- Email Input -->
+          <ion-item class="custom-input">
+            <ion-icon name="mail-outline" slot="start" class="input-icon"></ion-icon>
+            <ion-input
+              [(ngModel)]="email"
+              name="email"
+              type="email"
+              placeholder="Enter your email"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <!-- Password Input -->
+          <ion-item class="custom-input">
+            <ion-icon name="lock-closed-outline" slot="start" class="input-icon"></ion-icon>
+            <ion-input
+              [(ngModel)]="password"
+              name="password"
+
+              type="password"
+              placeholder="Enter your password"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <!-- Forgot Password Link -->
+          <!-- <div class="forgot-password">
+            <a href="#">Forgot Password?</a>
+          </div> -->
+
+          <!-- Login Button -->
+          <ion-button
+            expand="block"
+            class="login-button"
+            type="submit"
+            [disabled]="isLoading || !loginForm.valid">
+            <ion-icon name="log-in-outline" slot="start"></ion-icon>
+            <span *ngIf="!isLoading">Login</span>
+            <ion-spinner *ngIf="isLoading" name="dots"></ion-spinner>
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

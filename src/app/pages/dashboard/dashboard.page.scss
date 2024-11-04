@@ -1,0 +1,83 @@
+.card-content-skeleton {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+}
+
+.icon-skeleton {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  margin: 0;
+}
+
+.text-skeleton {
+  flex: 1;
+
+  ion-skeleton-text {
+    height: 16px;
+    margin: 6px 0;
+    border-radius: 4px;
+  }
+}
+
+.summary-skeleton-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--ion-color-light);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  div {
+    flex: 1;
+    margin-right: 16px;
+
+    ion-skeleton-text {
+      margin: 6px 0;
+      border-radius: 4px;
+    }
+  }
+}
+
+.stat-card, .summary-card {
+  margin: 8px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+:host ::ng-deep {
+  ion-skeleton-text {
+    --background-rgb: var(--ion-color-light-rgb);
+    --border-radius: 4px;
+
+    &::after {
+      background: linear-gradient(
+        90deg,
+        rgba(var(--ion-color-light-rgb), 0) 0%,
+        rgba(var(--ion-color-light-rgb), 0.5) 50%,
+        rgba(var(--ion-color-light-rgb), 0) 100%
+      );
+    }
+  }
+}
+
+// Add smooth transition when content loads
+.ion-padding {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

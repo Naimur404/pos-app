@@ -1,0 +1,65 @@
+<!-- new-customer-modal.component.html -->
+<ion-modal
+  [isOpen]="isOpen"
+  (didDismiss)="closeModal()"
+  [breakpoints]="[0, 0.5, 0.8]"
+  [initialBreakpoint]="0.8"
+  class="custom-modal">
+  <ng-template>
+    <ion-header class="ion-no-border">
+      <ion-toolbar>
+        <ion-title>Add New Customer</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal()">
+            <ion-icon name="close-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <!-- <form [formGroup]="customerForm" (ngSubmit)="onSubmit()"> -->
+        <ion-list>
+          <ion-item>
+            <ion-label position="stacked">Name *</ion-label>
+            <ion-input formControlName="name" type="text" placeholder="Enter customer name"></ion-input>
+            <ion-note color="danger" *ngIf="customerForm.get('name')?.touched && customerForm.get('name')?.errors?.['required']">
+              Name is required
+            </ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Phone *</ion-label>
+            <ion-input formControlName="phone" type="tel" placeholder="Enter phone number"></ion-input>
+            <ion-note color="danger" *ngIf="customerForm.get('phone')?.touched && customerForm.get('phone')?.errors?.['required']">
+              Phone is required
+            </ion-note>
+            <ion-note color="danger" *ngIf="customerForm.get('phone')?.touched && customerForm.get('phone')?.errors?.['pattern']">
+              Invalid phone number format
+            </ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input formControlName="email" type="email" placeholder="Enter email address"></ion-input>
+            <ion-note color="danger" *ngIf="customerForm.get('email')?.touched && customerForm.get('email')?.errors?.['email']">
+              Invalid email format
+            </ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Address</ion-label>
+            <ion-textarea formControlName="address" placeholder="Enter address" rows="3"></ion-textarea>
+          </ion-item>
+        </ion-list>
+
+        <div class="ion-padding">
+          <ion-button expand="block" type="submit" [disabled]="!customerForm.valid || isSubmitting">
+            <ion-spinner name="crescent" *ngIf="isSubmitting"></ion-spinner>
+            <span *ngIf="!isSubmitting">Save Customer</span>
+          </ion-button>
+        </div>
+      <!-- </form> -->
+    </ion-content>
+  </ng-template>
+</ion-modal>

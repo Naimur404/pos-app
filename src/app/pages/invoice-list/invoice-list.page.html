@@ -1,0 +1,123 @@
+
+<app-header [user]="user"  [title] ="'All Invoice'" [showInvoiceButton]="false" [showPosButton]="true" [showInvoiceDetails]="false" ></app-header>
+
+<ion-content>
+  <!-- Search Bar -->
+  <ion-searchbar
+    [(ngModel)]="searchQuery"
+    placeholder="Search invoices..."
+    (ionInput)="handleSearch($event)"
+    animated>
+  </ion-searchbar>
+
+  <!-- POS Button -->
+
+
+  <!-- Filters -->
+  <ion-item-group class="ion-padding-horizontal">
+    <ion-chip
+      *ngFor="let method of paymentMethods"
+      [color]="selectedPaymentMethod === method ? 'primary' : 'medium'"
+      (click)="filterByPaymentMethod(method)">
+      <ion-icon [name]="selectedPaymentMethod === method ? 'checkmark' : 'card'"></ion-icon>
+      <ion-label>{{ method }}</ion-label>
+    </ion-chip>
+  </ion-item-group>
+
+  <!-- Invoice List -->
+  <ion-list>
+    <ion-item-group class="ion-padding">
+      <ion-card *ngFor="let invoice of invoices" class="invoice-card">
+        <ion-card-header>
+          <ion-card-subtitle>Invoice #{{ invoice.id }}</ion-card-subtitle>
+          <ion-card-title>{{ invoice.outlet_name }}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6">
+                <ion-text color="medium">
+                  <p>
+                    <ion-icon name="calendar"></ion-icon>
+                    {{ invoice.sale_date }}
+                  </p>
+                </ion-text>
+              </ion-col>
+              <ion-col size="6">
+                <ion-text color="medium">
+                  <p>
+                    <ion-icon name="call"></ion-icon>
+                    {{ invoice.mobile }}
+                  </p>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="6">
+                <ion-text>
+                  <p class="amount-text">
+                    <ion-icon name="wallet"></ion-icon>
+                    Paid: ৳{{ invoice.paid_amount }}
+                  </p>
+                </ion-text>
+              </ion-col>
+              <ion-col size="6">
+                <ion-chip [color]="getPaymentMethodColor(invoice.payment_method_id)" class="payment-chip">
+                  <ion-icon name="card"></ion-icon>
+                  <ion-label>{{ invoice.payment_method_id }}</ion-label>
+                </ion-chip>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <ion-button
+            fill="clear"
+            size="small"
+            expand="block"
+            (click)="viewInvoiceDetails(invoice.id)">
+            <ion-icon name="eye" slot="start"></ion-icon>
+            View Details
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-item-group>
+  </ion-list>
+
+  <!-- Infinite Scroll -->
+  <ion-infinite-scroll
+    (ionInfinite)="loadMore($event)"
+    [disabled]="!hasMoreData">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more invoices...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <!-- Loading Indicator -->
+  <ion-loading
+    [isOpen]="isLoading && isFirstLoad"
+    message="Loading invoices..."
+    [duration]="3000">
+  </ion-loading>
+
+  <!-- No Results Message -->
+  <div
+    *ngIf="invoices.length === 0 && !isLoading"
+    class="no-results ion-padding ion-text-center">
+    <ion-text color="medium">
+      <h5>No invoices found</h5>
+      <p>Try adjusting your search or filters</p>
+    </ion-text>
+  </div>
+
+  <!-- End of Results Message -->
+  <div
+    *ngIf="!hasMoreData && invoices.length > 0"
+    class="end-message ion-padding ion-text-center">
+    <ion-text color="medium">
+      <p>No more invoices to load</p>
+    </ion-text>
+  </div>
+</ion-content>
