@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'http://192.168.68.54:8000/api',
+  // You can add other API-related configuration here
+  version: '1.0.0',
+  timeout: 30000, // API timeout in milliseconds
 };
 
 /*

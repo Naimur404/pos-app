@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Storage } from '@ionic/storage-angular';
-import { Observable, from, throwError } from 'rxjs';
+import { Observable, from, throwError, firstValueFrom } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { ApiService } from '../core/services/api.service';
 
 export interface User {
   id: number;
@@ -21,15 +22,16 @@ export interface LoginResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private API_URL = 'http://192.168.68.54:8000/api';
+  // private API_URL = 'http://192.168.68.54:8000/api';
   private readonly TOKEN_KEY = 'token';
   private readonly USER_KEY = 'user';
   private isInitialized = false;
 
   constructor(
-    private http: HttpClient,
+    // private http: HttpClient,
     private storage: Storage,
-    private router: Router
+    private router: Router,
+    private apiService: ApiService
   ) {
     this.init();
   }
@@ -43,7 +45,7 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.API_URL}/login`, { email, password })
+    return this.apiService.post<LoginResponse>(`login`, { email, password })
       .pipe(
         tap(async response => {
           if (response.status === 'success') {
@@ -101,9 +103,16 @@ export class AuthService {
   }
 
   async logout(): Promise<void> {
-    await this.storage.clear();
-    this.router.navigate(['/login']);
-  }
-
+    try {
+      console.log('Starting logout...');
+      await firstValueFrom(this.apiService.post<any>('logout', {}));
+      console.log('Logout successful');
+      await this.storage.clear();
+      await this.router.navigate(['/login']);
+    } catch (error) {
+      console.error('Logout failed:', error);
+      throw error;
+    }
+}
 
 }

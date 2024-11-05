@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Customer, Product, CustomerResponse, PaymentMethod } from '../pos/pos.interfaces';
 import { AuthService } from '../../services/auth.service';
+import { ApiService } from '../../core/services/api.service';
 
 interface InvoiceProduct {
   product_id: number;
@@ -47,15 +48,17 @@ export interface Invoice {
   providedIn: 'root'
 })
 export class PosService {
-  private readonly API_URL = 'http://192.168.68.54:8000/api';
+  // private readonly API_URL = 'http://192.168.68.54:8000/api';
   private selectedProductsSubject = new BehaviorSubject<Product[]>([]);
   private selectedCustomerSubject = new BehaviorSubject<Customer | null>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private apiService: ApiService
+  ) {}
 
   // Customer Methods
   getAllCustomers(): Observable<Customer[]> {
-    return this.http.get<any[]>(`${this.API_URL}/customer`).pipe(
+    return this.apiService.get<any[]>(`customer`).pipe(
       map(response => response.map(customer => ({
         id: customer.id,
         name: customer.name,
@@ -67,7 +70,7 @@ export class PosService {
   }
 
   getAllPaymentMethod(): Observable<PaymentMethod[]> {
-    return this.http.get<any[]>(`${this.API_URL}/payment-method`).pipe(
+    return this.apiService.get<any[]>(`payment-method`).pipe(
       map(response => response.map(PaymentMethod => ({
         id: PaymentMethod.id,
         name: PaymentMethod.name,
@@ -77,7 +80,7 @@ export class PosService {
   }
 
   searchCustomers(searchTerm: string): Observable<Customer[]> {
-    return this.http.get<any[]>(`${this.API_URL}/customer`, {
+    return this.apiService.get<any[]>(`customer`, {
       params: { search: searchTerm }
     }).pipe(
       map(response => response.map(customer => ({
@@ -92,7 +95,7 @@ export class PosService {
 
   // Product Methods
   getAllProducts(): Observable<Product[]> {
-    return this.http.get<any[]>(`${this.API_URL}/product`).pipe(
+    return this.apiService.get<any[]>(`product`).pipe(
       map(response => response.map(product => ({
         id: product.product_id,
         stock_id: product.stock_id,
@@ -106,7 +109,7 @@ export class PosService {
   }
 
   searchProducts(searchTerm: string): Observable<Product[]> {
-    return this.http.get<any[]>(`${this.API_URL}/product`, {
+    return this.apiService.get<any[]>(`product`, {
       params: { search: searchTerm }
     }).pipe(
       map(response => response.map(product => ({
@@ -180,10 +183,10 @@ export class PosService {
       redeemed_points: invoice.redeemedPoints
     };
 
-    return this.http.post(`${this.API_URL}/invoice-create`, payload);
+    return this.apiService.post(`invoice-create`, payload);
   }
 
   saveCustomer(customerData: Customer): Observable<CustomerResponse> {
-    return this.http.post<CustomerResponse>(`${this.API_URL}/customer`, customerData);
+    return this.apiService.post<CustomerResponse>(`customer`, customerData);
 }
 }

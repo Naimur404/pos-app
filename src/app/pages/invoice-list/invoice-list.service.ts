@@ -3,14 +3,17 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Invoice, InvoiceResponse } from './invoice-list.interfaces';
+import { ApiService } from '../../core/services/api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InvoiceListService {
-  private readonly API_URL = 'http://192.168.68.54:8000/api';
+  // private readonly API_URL = 'http://192.168.68.54:8000/api';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private apiService: ApiService
+  ) {}
 
   getInvoices(
     page: number,
@@ -29,7 +32,7 @@ export class InvoiceListService {
       params = params.set('payment_method', paymentMethod);
     }
 
-    return this.http.get<InvoiceResponse>(`${this.API_URL}/all-invoice`, { params })
+    return this.apiService.get<InvoiceResponse>(`all-invoice`, { params })
       .pipe(
         map(response => {
           if (!response) {
@@ -43,5 +46,5 @@ export class InvoiceListService {
         })
       );
   }
-  
+
 }

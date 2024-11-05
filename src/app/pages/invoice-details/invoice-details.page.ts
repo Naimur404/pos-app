@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { LoadingController } from '@ionic/angular';
+import { ApiService } from '../../core/services/api.service';
 
 interface SalesReturn {
   id: number;
@@ -67,7 +68,8 @@ export class InvoiceDetailsPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private apiService: ApiService
   ) {}
 
   ngOnInit() {
@@ -87,7 +89,7 @@ export class InvoiceDetailsPage implements OnInit {
       await loading.present();
       this.isLoading = true;
 
-      this.http.get<any>(`http://192.168.68.54:8000/api/invoice-details/${invoiceId}`)
+      this.apiService.get<any>(`/invoice-details/${invoiceId}`)
         .subscribe(
           (response) => {
             this.invoiceDetails = response;
@@ -117,5 +119,5 @@ export class InvoiceDetailsPage implements OnInit {
     return methods[id] || 'Unknown';
   }
 
-  
+
 }

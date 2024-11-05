@@ -306,7 +306,7 @@ export class PosPage implements OnInit, OnDestroy {
     }
 
     // Only trigger search when text length is 4 or more
-    if (searchText.length >= 4) {
+    if (searchText.length >= 3) {
       this.searchProduct$.next(searchText);
     }
   }
@@ -318,7 +318,7 @@ export class PosPage implements OnInit, OnDestroy {
     }
 
     // Only trigger search when text length is 4 or more
-    if (searchText.length >= 4) {
+    if (searchText.length >= 3) {
       this.searchCustomer$.next(searchText);
     }
 
