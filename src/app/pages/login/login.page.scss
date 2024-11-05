@@ -1,255 +1,224 @@
-/* First add these divs just after ion-content opening tag in your HTML */
-/*
-<div class="background">
-  <div class="cube"></div>
-  <div class="cube"></div>
-  <div class="cube"></div>
-  <div class="cube"></div>
-  <div class="cube"></div>
-</div>
-*/
-
-/* Animated Background Styles */
-.background {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(132deg, #FC415A, #591BC5, #212335);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
-  overflow: hidden;
+:host {
+  --primary-color: #4A90E2;
+  --secondary-color: #5C6BC0;
+  --text-color: #333333;
+  --light-gray: #f5f5f5;
+  --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --background-color: #f0f2f5;
 }
 
-.cube {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(5px);
-  border-radius: 10px;
-  animation: cube 10s ease-in infinite;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+ion-content {
+  --background: var(--background-color);
 }
 
-.cube:nth-child(1) {
-  width: 120px;
-  height: 120px;
-  left: 35%;
-  animation-delay: 0s;
-}
-
-.cube:nth-child(2) {
-  width: 150px;
-  height: 150px;
-  right: 25%;
-  animation-delay: 2s;
-}
-
-.cube:nth-child(3) {
-  width: 80px;
-  height: 80px;
-  bottom: 25%;
-  right: 15%;
-  animation-delay: 4s;
-}
-
-.cube:nth-child(4) {
-  width: 100px;
-  height: 100px;
-  bottom: 15%;
-  left: 25%;
-  animation-delay: 6s;
-}
-
-.cube:nth-child(5) {
-  width: 90px;
-  height: 90px;
-  top: 15%;
-  left: 15%;
-  animation-delay: 8s;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes cube {
-  0% {
-    transform: scale(0) rotate(0deg) translate(-50%, -50%);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(20) rotate(960deg) translate(-50%, -50%);
-    opacity: 0;
-  }
-}
-
-/* Login Container Styles */
 .login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100%;
-  padding: 16px;
-  position: relative;
-  z-index: 1;
+  padding: 20px;
 }
 
-/* Logo Section Styles */
 .logo-section {
   text-align: center;
   margin-bottom: 2rem;
-  animation: fadeIn 1s ease-in;
+  padding: 2rem;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  width: 100%;
+  max-width: 400px;
 }
 
 .logo-icon {
-  font-size: 80px;
-  color: #ffffff;
+  font-size: 4rem;
+  color: white;
   margin-bottom: 1rem;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .title {
-  font-size: 24px;
-  font-weight: 700;
-  color: #ffffff;
+  color: white;
+  font-size: 1.8rem;
   margin: 0;
-  margin-bottom: 8px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
 }
 
 .subtitle {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.9);
-  margin: 0;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
 }
 
-/* Login Card Styles */
 .login-card {
   width: 100%;
   max-width: 400px;
-  margin: 0 auto;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  animation: slideUp 0.8s ease-out;
+  background: white;
+  box-shadow: var(--card-shadow);
+  margin-top: -1rem;
 }
 
-/* Input Styles */
+/* Input Styling for better Android visibility */
 .custom-input {
-  margin-bottom: 16px;
-  --background: rgba(255, 255, 255, 0.1);
-  --border-radius: 8px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  --background: #ffffff;
   --padding-start: 12px;
   --padding-end: 12px;
-  --highlight-height: 0;
-  --border-color: rgba(255, 255, 255, 0.2);
+  --highlight-height: 2px;
+  --highlight-color: var(--primary-color);
+  --border-color: #dcdcdc;
+  --border-width: 1px;
+  --border-style: solid;
+  --border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.custom-input.item-has-focus {
-  --background: rgba(255, 255, 255, 0.15);
-}
-
-.input-icon {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 20px;
-  margin-right: 8px;
+/* Specific input field styling for Android */
+ion-item.custom-input {
+  --background: #ffffff;
+  --background-focused: #ffffff;
+  --background-hover: #ffffff;
 }
 
 ion-input {
   --padding-start: 8px;
-  font-size: 16px;
-  --placeholder-color: rgba(255, 255, 255, 0.6);
-  --placeholder-opacity: 1;
+  --padding-end: 8px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  --placeholder-color: #666666;
+  --placeholder-opacity: 0.8;
+  --color: #333333;
+  font-size: 16px; /* Better for mobile readability */
+}
+
+/* Ensure input text is visible on Android */
+ion-input.ion-touched,
+ion-input.ion-focused {
+  --color: #333333;
+}
+
+.input-icon {
+  color: var(--primary-color);
+  margin-right: 8px;
+  font-size: 20px; /* Slightly larger icons for better visibility */
+}
+
+/* Native input styling for better visibility */
+input.native-input {
+  color: #333333 !important;
+}
+
+.forgot-password {
+  text-align: right;
+  margin: 1rem 0;
+}
+
+.forgot-password a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.login-button {
+  margin-top: 1.5rem;
+  --background: var(--primary-color);
+  --background-hover: var(--secondary-color);
+  --border-radius: 8px;
+  --padding-top: 1rem;
+  --padding-bottom: 1rem;
+  text-transform: none;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  height: 48px; /* Better touch target size */
+}
+
+.login-button ion-icon {
+  margin-right: 8px;
+}
+
+ion-spinner {
   --color: white;
 }
 
-/* Button Styles */
-.login-button {
-  margin-top: 24px;
-  --background: rgba(255, 255, 255, 0.15);
-  --background-hover: rgba(255, 255, 255, 0.2);
-  --background-activated: rgba(255, 255, 255, 0.25);
-  --border-radius: 8px;
-  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  height: 48px;
-  font-size: 16px;
-  font-weight: 600;
+/* Material Design-like focus effect */
+.custom-input.item-has-focus {
+  --highlight-height: 2px;
+  --border-color: var(--primary-color);
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Media Queries */
-@media (max-width: 360px) {
-  .logo-icon {
-    font-size: 60px;
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .login-card,
+  .logo-section {
+    max-width: 100%;
   }
 
   .title {
-    font-size: 20px;
+    font-size: 1.6rem;
   }
 
-  .subtitle {
-    font-size: 14px;
-  }
-}
-
-/* Dark mode adjustments */
-@media (prefers-color-scheme: dark) {
-  .login-card {
-    background: rgba(0, 0, 0, 0.2);
+  .logo-icon {
+    font-size: 3.5rem;
   }
 
-  .custom-input {
-    --background: rgba(0, 0, 0, 0.2);
-  }
-
-  .custom-input.item-has-focus {
-    --background: rgba(0, 0, 0, 0.3);
-  }
-}
-
-/* Safe area padding for notched devices */
-@supports (padding: max(0px)) {
   .login-container {
-    padding-left: max(16px, env(safe-area-inset-left));
-    padding-right: max(16px, env(safe-area-inset-right));
-    padding-bottom: max(16px, env(safe-area-inset-bottom));
+    padding: 16px;
+  }
+
+  /* Increase touch targets for mobile */
+  .custom-input {
+    margin-bottom: 16px;
+  }
+
+  ion-input {
+    --padding-top: 14px;
+    --padding-bottom: 14px;
+  }
+}
+
+/* Android-specific styles */
+.md .custom-input {
+  --highlight-height: 2px;
+  --border-width: 1px;
+  --border-color: #dcdcdc;
+}
+
+.md ion-input {
+  --padding-top: 14px;
+  --padding-bottom: 14px;
+}
+
+/* Animation for form elements */
+.custom-input {
+  transform: translateY(20px);
+  opacity: 0;
+  animation: slideUp 0.5s ease forwards;
+}
+
+@keyframes slideUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Stagger animation for form elements */
+.custom-input:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.custom-input:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.login-button {
+  opacity: 0;
+  animation: fadeIn 0.5s ease 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
   }
 }

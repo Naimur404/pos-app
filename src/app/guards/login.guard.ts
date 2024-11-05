@@ -16,7 +16,7 @@ export class LoginGuard implements CanActivate {
     const isAuthenticated = await this.authService.isAuthenticated();
 
     if (isAuthenticated) {
-      this.router.navigate(['/pos']); // Redirect to POS if already logged in
+      this.router.navigate(['/dashboard']); // Redirect to POS if already logged in
       return false;
     }
 

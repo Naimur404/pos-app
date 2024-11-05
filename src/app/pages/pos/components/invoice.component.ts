@@ -114,9 +114,6 @@ import { ModalController } from '@ionic/angular';
         </tr>
       </table>
 
-      <div class="barcode-container">
-        <ngx-barcode [bc-value]="invoice.id.toString()" [bc-format]="'CODE39'"></ngx-barcode>
-      </div>
 
       <div class="footer">
         <h4>A Concern of Stolen Group</h4>
