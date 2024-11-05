@@ -34,4 +34,22 @@ ion-content::part(scroll) {
   }
 }
 
+.custom-loading {
+  .loading-wrapper {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
 
+  .loading-content {
+    color: var(--ion-color-primary);
+    font-weight: 500;
+  }
+
+  ion-spinner {
+    width: 40px;
+    height: 40px;
+    color: var(--ion-color-primary);
+  }
+}

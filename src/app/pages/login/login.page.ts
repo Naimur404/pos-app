@@ -34,7 +34,7 @@ export class LoginPage {
       if (response && response.status === 'success') {
         await this.presentToast('Login successful', 'success');
         setTimeout(() => {
-          this.router.navigate(['/pos']);
+          this.router.navigate(['/dashboard']);
         }, 1000);
       }
     } catch (error: any) {
@@ -59,7 +59,7 @@ export class LoginPage {
   }
   async ngOnInit() {
     if (await this.authService.isAuthenticated()) {
-      this.router.navigate(['/pos']);
+      this.router.navigate(['/dashboard']);
     }
   }
 }

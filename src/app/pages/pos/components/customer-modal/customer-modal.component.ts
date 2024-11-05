@@ -41,6 +41,7 @@ export class CustomerModalComponent {
     });
 
     modal.onDidDismiss().then((result) => {
+      console.log(result.data);
       if (result.data) {
         this.newCustomerSaved.emit(result.data);
       }

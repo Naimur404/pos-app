@@ -2,11 +2,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController, ToastController } from '@ionic/angular';
-import { Subject } from 'rxjs';
+import { empty, Subject } from 'rxjs';
 import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { PosService , Invoice} from './pos.service';
 import { AuthService } from '../../services/auth.service';
-import { Customer, Product, User } from './pos.interfaces';
+import { PrintService } from '../../services/print.service';
+import { Customer, Product, User, CustomerResponse, PaymentMethod } from './pos.interfaces';
+import { ModalController } from '@ionic/angular';
+import { InvoiceComponent } from './components/invoice.component';
+import { LoadingService } from '../../services/loading.service';
+
 
 @Component({
   selector: 'app-pos',
@@ -14,6 +19,7 @@ import { Customer, Product, User } from './pos.interfaces';
   styleUrls: ['./pos.page.scss']
 })
 export class PosPage implements OnInit, OnDestroy {
+
   private destroy$ = new Subject<void>();
   private searchProduct$ = new Subject<string>();
   private searchCustomer$ = new Subject<string>();
@@ -25,7 +31,7 @@ export class PosPage implements OnInit, OnDestroy {
   isNewCustomerModalOpen = false;
   searchCustomer = '';
   searchProduct = '';
-
+  paymentMethodAll: PaymentMethod[] = [];
   // Data lists
   productsList: Product[] = [];
   customersList: Customer[] = [];
@@ -33,12 +39,15 @@ export class PosPage implements OnInit, OnDestroy {
   selectedCustomer: Customer | null = null;
   user: User | any = [];
 
+  invoiceData = [];
+
+
 
   // Form inputs
   flatDiscount = 0;
   discountPercentage = 0;
   redeemedPoints = 0;
-  paymentType = 'Cash';
+  paymentType: number = this.paymentMethodAll.length > 0 ? this.paymentMethodAll[0].id : 1;
   givenAmount = 0;
 
   // New Customer Form
@@ -51,7 +60,10 @@ export class PosPage implements OnInit, OnDestroy {
     private posService: PosService,
     private authService: AuthService,
     private actionSheetCtrl: ActionSheetController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private modalController: ModalController,
+    private printService: PrintService,
+    private loadingService: LoadingService,
   ) {}
 
   ngOnInit() {
@@ -66,9 +78,15 @@ export class PosPage implements OnInit, OnDestroy {
         console.log('User data is undefined or malformed');
       }
     });
+
+
     this.isLoading = false;
-    this.setupSearchSubscriptions();
-    this.loadInitialData();
+     this.setupSearchSubscriptions();
+    // this.loadInitialData();
+     this.loadAllPaymentMethod()
+
+
+
   }
 
   ngOnDestroy() {
@@ -147,6 +165,18 @@ export class PosPage implements OnInit, OnDestroy {
     }
   }
 
+  async loadAllPaymentMethod() {
+    try {
+      const payment = await this.posService.getAllPaymentMethod()
+        .toPromise()
+        .then(result => result || []);
+      this.paymentMethodAll = payment;
+    } catch (error) {
+      console.error('Error loading customers:', error);
+      this.paymentMethodAll = [];
+    }
+  }
+
   async searchCustomers(term: string) {
     try {
       const customers = await this.posService.searchCustomers(term)
@@ -195,9 +225,9 @@ export class PosPage implements OnInit, OnDestroy {
     this.loadAllProducts();
   }
 
-  openNewCustomerModal() {
-    this.isNewCustomerModalOpen = true;
-  }
+  // openNewCustomerModal() {
+  //   this.isNewCustomerModalOpen = true;
+  // }
 
   // Product Actions
   addProduct(product: Product) {
@@ -349,6 +379,7 @@ export class PosPage implements OnInit, OnDestroy {
       products: this.selectedProducts,
       customer: this.selectedCustomer,
       subTotal: this.subTotal,
+      outlet_id: this.user.outlet_id,
       discountPercentage: this.discountPercentage,  // Added
       flatDiscount: this.flatDiscount,              // Added
       totalDiscount: this.totalDiscount,
@@ -360,12 +391,50 @@ export class PosPage implements OnInit, OnDestroy {
     };
 
     try {
-      await this.posService.saveInvoice(invoice).toPromise();
+      await this.loadingService.showLoading();
+
+      const data = await this.posService.saveInvoice(invoice).toPromise();
+      if(data.status === "success") {
+        await this.presentToast(data.message, 'success');
+        this.showInvoice(data.data);
+        this.invoiceData = data.data;
+      }
     } catch (error) {
       console.error('Error saving invoice:', error);
-      throw error;
+      await this.presentToast('Error saving invoice', 'danger');
+    } finally {
+      await this.loadingService.hideLoading();
     }
   }
+
+  async showInvoice(invoiceData: any) {
+    const modal = await this.modalController.create({
+      component: InvoiceComponent,
+      componentProps: {
+        invoice: invoiceData
+      }
+    });
+
+    // Listen for the modal to be presented
+    modal.addEventListener('ionModalDidPresent', () => {
+      // Small timeout to ensure content is rendered
+      setTimeout(() => {
+        const printContent = document.querySelector('.invoice-content')?.innerHTML;
+        if (printContent) {
+          this.printService.printInvoice(printContent);
+        }
+      }, 500);
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+  }
+
+    // Either navigate to a new page or show in a modal
+
+
+
 
   private resetForm() {
     this.selectedProducts = [];
@@ -373,23 +442,37 @@ export class PosPage implements OnInit, OnDestroy {
     this.flatDiscount = 0;
     this.discountPercentage = 0;
     this.redeemedPoints = 0;
-    this.paymentType = 'Cash';
+    this.paymentType = 1;
     this.givenAmount = 0;
   }
 
-  async onNewCustomerSaved(customerData: Customer) {
+  async newCustomerSaved(customerData: Customer) {
+    console.log('hello');
+
     try {
-      // Save the new customer using your PosService
-      const savedCustomer = await this.posService.saveCustomer(customerData).toPromise();
-      if (savedCustomer) {
-        // Add the new customer to the list and select them
-        this.customersList = [...this.customersList, savedCustomer];
-        this.selectCustomer(savedCustomer);
-        await this.presentToast('Customer added successfully!', 'success');
-      }
+        const response = await this.posService.saveCustomer(customerData).toPromise()
+            .then((result: CustomerResponse | undefined) => {
+                if (result === undefined) {
+                    throw new Error('No response received');
+                }
+                return result;
+            });
+
+        if (response) {
+            console.log(response);
+
+            if (response.flag === true) {
+                this.customersList = [...this.customersList, customerData];
+                this.selectCustomer(response.customer);
+                await this.presentToast('Customer added successfully!', 'success');
+            } else {
+                await this.presentToast(response.message || 'Customer already exists.', 'warning');
+            }
+        }
     } catch (error) {
-      console.error('Error saving new customer:', error);
-      await this.presentToast('Error saving customer. Please try again.', 'danger');
+        console.error('Error saving new customer:', error);
+        await this.presentToast('Error saving customer. Please try again.', 'danger');
     }
-  }
 }
+  }
+

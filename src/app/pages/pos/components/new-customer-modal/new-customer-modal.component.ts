@@ -18,8 +18,8 @@ export class NewCustomerModalComponent implements OnInit {
   ) {
     this.customerForm = this.formBuilder.group({
       name: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      email: ['', [Validators.email]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]],
+      // email: ['', [Validators.email]],
       address: ['']
     });
   }
@@ -31,14 +31,17 @@ export class NewCustomerModalComponent implements OnInit {
   }
 
   async onSubmit() {
+    console.log(this.customerForm.value);
     if (this.customerForm.valid) {
       this.isSubmitting = true;
       try {
         const customerData: Customer = {
           ...this.customerForm.value,
+          email: '',
           points: 0 // Initialize new customer with 0 points
         };
-        await this.modalController.dismiss(customerData);
+        console.log(customerData);
+         await this.modalController.dismiss(customerData);
       } catch (error) {
         console.error('Error submitting form:', error);
       } finally {

@@ -1,257 +1,202 @@
-html, body {
+/* First add these divs just after ion-content opening tag in your HTML */
+/*
+<div class="background">
+  <div class="cube"></div>
+  <div class="cube"></div>
+  <div class="cube"></div>
+  <div class="cube"></div>
+  <div class="cube"></div>
+</div>
+*/
+
+/* Animated Background Styles */
+.background {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
   margin: 0;
   padding: 0;
-  height: 100%;
-  width: 100%;
+  background: linear-gradient(132deg, #FC415A, #591BC5, #212335);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
   overflow: hidden;
-  position: fixed;
 }
 
+.cube {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+  animation: cube 10s ease-in infinite;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+}
+
+.cube:nth-child(1) {
+  width: 120px;
+  height: 120px;
+  left: 35%;
+  animation-delay: 0s;
+}
+
+.cube:nth-child(2) {
+  width: 150px;
+  height: 150px;
+  right: 25%;
+  animation-delay: 2s;
+}
+
+.cube:nth-child(3) {
+  width: 80px;
+  height: 80px;
+  bottom: 25%;
+  right: 15%;
+  animation-delay: 4s;
+}
+
+.cube:nth-child(4) {
+  width: 100px;
+  height: 100px;
+  bottom: 15%;
+  left: 25%;
+  animation-delay: 6s;
+}
+
+.cube:nth-child(5) {
+  width: 90px;
+  height: 90px;
+  top: 15%;
+  left: 15%;
+  animation-delay: 8s;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes cube {
+  0% {
+    transform: scale(0) rotate(0deg) translate(-50%, -50%);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(20) rotate(960deg) translate(-50%, -50%);
+    opacity: 0;
+  }
+}
+
+/* Login Container Styles */
 .login-container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-  position: fixed;
-  overflow-y: auto;
-  overflow-x: hidden;
+  justify-content: center;
+  min-height: 100%;
   padding: 16px;
-  box-sizing: border-box;
-  left: 0;
-  top: 0;
-}
-
-/* Background decorations remain same */
-.login-container::before {
-  content: '';
-  position: fixed;
-  width: 400px;
-  height: 400px;
-  background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 152, 0, 0.05));
-  border-radius: 50%;
-  top: -200px;
-  right: -200px;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.login-container::after {
-  content: '';
-  position: fixed;
-  width: 300px;
-  height: 300px;
-  background: linear-gradient(135deg, rgba(255, 152, 0, 0.08), rgba(255, 152, 0, 0.03));
-  border-radius: 50%;
-  bottom: -150px;
-  left: -150px;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.content-wrapper {
-  width: 100%;
-  max-width: 480px;
-  margin: auto 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   position: relative;
   z-index: 1;
-  padding-top: 5vh;
 }
 
-/* Logo section remains same */
+/* Logo Section Styles */
 .logo-section {
   text-align: center;
-  margin-bottom: 1.5rem;
-  position: relative;
-  z-index: 1;
-  flex-shrink: 0;
-  width: 100%;
-  max-width: 480px;
+  margin-bottom: 2rem;
+  animation: fadeIn 1s ease-in;
 }
 
-.logo-section .logo-icon {
-  font-size: 70px;
-  color: var(--ion-color-primary);
-  margin-bottom: 0.5rem;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-  animation: pulse 2s infinite;
+.logo-icon {
+  font-size: 80px;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
-.logo-section .title {
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--ion-color-dark);
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
   margin: 0;
-  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.logo-section .subtitle {
-  font-size: 14px;
-  color: var(--ion-color-medium);
-  margin: 4px 0 0 0;
-  letter-spacing: 0.2px;
+.subtitle {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* Login Card Styles */
 .login-card {
   width: 100%;
-  max-width: 480px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: 24px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  padding: 24px;
-  position: relative;
-  z-index: 1;
-  animation: fadeInUp 0.8s ease-out;
-  box-sizing: border-box;
+  max-width: 400px;
   margin: 0 auto;
-  overflow: hidden;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  animation: slideUp 0.8s ease-out;
 }
 
-/* Updated input styles with floating label */
+/* Input Styles */
 .custom-input {
   margin-bottom: 16px;
-  --background: rgba(var(--ion-color-light-rgb), 0.5);
-  --border-radius: 16px;
-  --padding-start: 20px;
-  --padding-end: 20px;
-  --highlight-height: 2px;
-  transition: all 0.3s ease;
-  position: relative;
-  height: 70px;
-  width: 100%;
-  max-width: 100%;
+  --background: rgba(255, 255, 255, 0.1);
+  --border-radius: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --highlight-height: 0;
+  --border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Email specific input */
-.custom-input.email-input {
-  --keyboard-type: email;
+.custom-input.item-has-focus {
+  --background: rgba(255, 255, 255, 0.15);
 }
 
-/* Floating label styles */
-.custom-input .floating-label {
-  position: absolute;
-  left: 56px; /* Adjust based on icon width */
-  top: 50%;
-  transform: translateY(-50%);
+.input-icon {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 20px;
+  margin-right: 8px;
+}
+
+ion-input {
+  --padding-start: 8px;
   font-size: 16px;
-  color: var(--ion-color-medium);
-  transition: all 0.3s ease;
-  pointer-events: none;
-  z-index: 2;
+  --placeholder-color: rgba(255, 255, 255, 0.6);
+  --placeholder-opacity: 1;
+  --color: white;
 }
 
-.custom-input.has-value .floating-label,
-.custom-input:focus-within .floating-label {
-  top: 12px;
-  transform: translateY(0) scale(0.85);
-  color: var(--ion-color-primary);
-}
-
-.custom-input ion-input {
-  font-size: 16px;
-  --padding-top: 25px;
-  --padding-bottom: 25px;
-  width: 100%;
-  max-width: 100%;
-  height: 100%;
-}
-
-/* Adjust padding when label floats */
-.custom-input.has-value ion-input,
-.custom-input:focus-within ion-input {
-  --padding-top: 35px;
-  --padding-bottom: 15px;
-}
-
-.custom-input:focus-within {
-  --background: rgba(var(--ion-color-light-rgb), 0.8);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.custom-input .input-icon {
-  color: var(--ion-color-medium);
-  margin-right: 16px;
-  font-size: 26px;
-  transition: color 0.3s ease;
-}
-
-.custom-input:focus-within .input-icon {
-  color: var(--ion-color-primary);
-}
-
-/* Rest of the styles remain same */
-.forgot-password {
-  text-align: right;
-  margin: 8px 0 16px;
-  width: 100%;
-}
-
-.forgot-password a {
-  color: var(--ion-color-primary);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
+/* Button Styles */
 .login-button {
-  --background: linear-gradient(135deg, #ff9800, #ff5722);
-  --border-radius: 14px;
-  --box-shadow: 0 8px 20px rgba(255, 152, 0, 0.3);
-  margin-top: 16px;
-  height: 60px;
+  margin-top: 24px;
+  --background: rgba(255, 255, 255, 0.15);
+  --background-hover: rgba(255, 255, 255, 0.2);
+  --background-activated: rgba(255, 255, 255, 0.25);
+  --border-radius: 8px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  height: 48px;
   font-size: 16px;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
-  width: 100%;
 }
 
-/* Mobile specific styles */
-@media (max-width: 520px) {
-  .login-container {
-    padding: 12px;
-  }
-
-  .content-wrapper {
-    padding-top: 3vh;
-  }
-
-  .login-card {
-    padding: 20px;
-    width: calc(100% - 24px);
-  }
-
-  // .custom-input {
-  //   height: 65px;
-  //   margin-bottom: 12px;
-  // }
-
-  /* Prevent zoom on input focus for iOS */
-  // input[type="email"],
-  // input[type="password"] {
-  //   font-size: 16px !important;
-  //   transform: scale(1) !important;
-  // }
-
-  .custom-input .floating-label {
-    font-size: 15px;
-  }
-}
-
-@keyframes fadeInUp {
+/* Animations */
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(-20px);
   }
   to {
     opacity: 1;
@@ -259,73 +204,52 @@ html, body {
   }
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(1);
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
   }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
-.custom-input {
-  margin-bottom: 16px;
-  --background: rgba(var(--ion-color-light-rgb), 0.5);
-  --border-radius: 16px;
-  --padding-start: 20px;
-  --padding-end: 20px;
-  --highlight-height: 2px;
-  transition: all 0.3s ease;
-  position: relative;
-  height: 70px;
-  width: 100%;
-  max-width: 100%;
-}
 
-/* Specific styles for email input */
-.custom-input.email-input input {
-  -webkit-text-security: none !important; /* Prevents password dots */
-  text-security: none !important;
-  -webkit-user-select: text !important; /* Enables text selection */
-  user-select: text !important;
-  -webkit-appearance: none !important; /* Removes any special appearance */
-  appearance: none !important;
-}
-
-/* Ensure email input shows proper keyboard */
-.custom-input.email-input ion-input {
-  --keyboard-type: email !important;
-  type: email !important;
-  inputmode: email !important;
-}
-
-.custom-input ion-input {
-  font-size: 18px;
-  --padding-top: 25px;
-  --padding-bottom: 25px;
-  width: 100%;
-  max-width: 100%;
-}
-
-/* Add specific styles for password input */
-.custom-input.password-input ion-input {
-  --keyboard-type: password;
-  type: password;
-}
-
-/* Mobile specific input fixes */
-@media (max-width: 520px) {
-  .custom-input ion-input {
-    font-size: 16px;
+/* Media Queries */
+@media (max-width: 360px) {
+  .logo-icon {
+    font-size: 60px;
   }
 
-  /* Specific fixes for email on mobile */
-  .custom-input.email-input input {
-    -webkit-text-security: none !important;
-    text-security: none !important;
-    -webkit-appearance: none !important;
-    appearance: none !important;
+  .title {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .login-card {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .custom-input {
+    --background: rgba(0, 0, 0, 0.2);
+  }
+
+  .custom-input.item-has-focus {
+    --background: rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Safe area padding for notched devices */
+@supports (padding: max(0px)) {
+  .login-container {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
   }
 }

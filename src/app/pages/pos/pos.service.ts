@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Customer, Product } from '../pos/pos.interfaces';
+import { Customer, Product, CustomerResponse, PaymentMethod } from '../pos/pos.interfaces';
+import { AuthService } from '../../services/auth.service';
 
 interface InvoiceProduct {
   product_id: number;
@@ -18,10 +19,11 @@ interface InvoicePayload {
   flat_discount: number;
   total_discount: number;
   payable_amount: number;
-  payment_type: string;
+  payment_type: number;
   given_amount: number;
   change_amount: number;
   redeemed_points?: number;
+  outlet_id: number;
 }
 
 export interface Invoice {
@@ -32,11 +34,14 @@ export interface Invoice {
   flatDiscount: number;
   totalDiscount: number;
   payableAmount: number;
-  paymentType: string;
+  paymentType: number;
   givenAmount: number;
   changeAmount: number;
   redeemedPoints?: number;
+  outlet_id: number;
 }
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +62,16 @@ export class PosService {
         phone: customer.mobile,
         address: customer.address,
         points: customer.points || 0
+      })))
+    );
+  }
+
+  getAllPaymentMethod(): Observable<PaymentMethod[]> {
+    return this.http.get<any[]>(`${this.API_URL}/payment-method`).pipe(
+      map(response => response.map(PaymentMethod => ({
+        id: PaymentMethod.id,
+        name: PaymentMethod.name,
+
       })))
     );
   }
@@ -148,8 +163,12 @@ export class PosService {
       products: invoice.products.map(product => ({
         product_id: product.id,
         quantity: product.quantity || 1,
-        price: product.price
+        price: product.price,
+        stock_id: product.stock_id,
+        size: product.size,
+        discount: 0
       })),
+      outlet_id: invoice.outlet_id,
       sub_total: invoice.subTotal,
       discount_percentage: invoice.discountPercentage,
       flat_discount: invoice.flatDiscount,
@@ -161,10 +180,10 @@ export class PosService {
       redeemed_points: invoice.redeemedPoints
     };
 
-    return this.http.post(`${this.API_URL}/invoice`, payload);
+    return this.http.post(`${this.API_URL}/invoice-create`, payload);
   }
 
-  saveCustomer(customerData: Customer): Observable<Customer> {
-    return this.http.post<Customer>(`${this.API_URL}/customers`, customerData);
-  }
+  saveCustomer(customerData: Customer): Observable<CustomerResponse> {
+    return this.http.post<CustomerResponse>(`${this.API_URL}/customer`, customerData);
+}
 }

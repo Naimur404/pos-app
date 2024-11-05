@@ -29,3 +29,13 @@ export interface User {
   email: string;
   outlet_id: any;
 }
+
+export interface CustomerResponse {
+  customer: Customer;
+  flag: boolean;
+  message: string;
+}
+export interface PaymentMethod {
+  id: number;
+  name: boolean;
+}

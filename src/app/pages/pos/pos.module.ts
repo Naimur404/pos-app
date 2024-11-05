@@ -9,7 +9,9 @@ import { PosPage } from './pos.page';
 import { ProductModalComponent } from './components/product-modal/product-modal.component';
 import { CustomerModalComponent } from './components/customer-modal/customer-modal.component';
 import { NewCustomerModalComponent } from './components/new-customer-modal/new-customer-modal.component';
+import { InvoiceComponent } from './components/invoice.component';
 import { SharedModule } from '../../shared/shared.module';
+
 
 const routes: Routes = [
   {
@@ -26,12 +28,14 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     SharedModule,
+
   ],
   declarations: [
     PosPage,
     ProductModalComponent,
     CustomerModalComponent,
-    NewCustomerModalComponent
+    NewCustomerModalComponent,
+    InvoiceComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
