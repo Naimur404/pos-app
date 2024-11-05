@@ -1,3 +1,4 @@
+// pos.page.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController, ToastController } from '@ionic/angular';
@@ -17,6 +18,7 @@ export class PosPage implements OnInit, OnDestroy {
   private searchProduct$ = new Subject<string>();
   private searchCustomer$ = new Subject<string>();
 
+  isLoading: boolean = true;
   // UI states
   isCustomerModalOpen = false;
   isProductModalOpen = false;
@@ -52,7 +54,6 @@ export class PosPage implements OnInit, OnDestroy {
     private toastCtrl: ToastController
   ) {}
 
-
   ngOnInit() {
 
     this.authService.getUser().subscribe((user: User | any) => {
@@ -65,7 +66,7 @@ export class PosPage implements OnInit, OnDestroy {
         console.log('User data is undefined or malformed');
       }
     });
-
+    this.isLoading = false;
     this.setupSearchSubscriptions();
     this.loadInitialData();
   }
@@ -374,5 +375,21 @@ export class PosPage implements OnInit, OnDestroy {
     this.redeemedPoints = 0;
     this.paymentType = 'Cash';
     this.givenAmount = 0;
+  }
+
+  async onNewCustomerSaved(customerData: Customer) {
+    try {
+      // Save the new customer using your PosService
+      const savedCustomer = await this.posService.saveCustomer(customerData).toPromise();
+      if (savedCustomer) {
+        // Add the new customer to the list and select them
+        this.customersList = [...this.customersList, savedCustomer];
+        this.selectCustomer(savedCustomer);
+        await this.presentToast('Customer added successfully!', 'success');
+      }
+    } catch (error) {
+      console.error('Error saving new customer:', error);
+      await this.presentToast('Error saving customer. Please try again.', 'danger');
+    }
   }
 }

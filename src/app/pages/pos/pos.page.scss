@@ -35,11 +35,11 @@ app-header {
 
 /* Scrollable Content */
 .scrollable-content {
-  flex: 1;
+  flex: 3;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   padding: 16px;
-  background-color: var(--ion-background-color);
+  // background-color: var(--ion-background-color);
   padding-bottom: calc(16px + var(--safe-area-bottom) + 60px);
 }
 

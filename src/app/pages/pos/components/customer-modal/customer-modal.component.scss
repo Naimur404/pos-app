@@ -1,56 +1,87 @@
+/* Custom CSS for Ion Modal with iOS Feel */
 .custom-modal {
-  --height: 90%;
   --border-radius: 20px;
+  --background: #ffffff;
+  --box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.custom-modal::part(content) {
-  border-radius: 20px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-}
-
+/* Modal Header */
 .modal-header {
-  --background: var(--ion-color-primary);
-  --color: var(--ion-color-primary-contrast);
-  border-radius: 20px 20px 0 0;
+  --background: #f8f8f8;
 }
 
 .modal-header ion-title {
-  font-weight: bold;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
 }
 
+.modal-header ion-button {
+  --background: transparent;
+  --color: #007aff; /* iOS Blue */
+}
+
+/* Search Bar Styling */
 .custom-searchbar {
+  --background: #f0f0f5;
   --border-radius: 10px;
-  --box-shadow: none;
-  margin: 10px;
+  --padding-start: 10px;
+  margin: 10px 15px;
 }
 
+.custom-searchbar input {
+  color: #333;
+  font-size: 1rem;
+}
+
+/* Modal Content */
+.modal-content {
+  --padding: 0;
+}
+
+/* Customer List */
 .customer-list {
+  --background: #ffffff;
   margin-top: 10px;
 }
 
 .customer-item {
-  --padding-start: 16px;
-  --padding-end: 16px;
-  --padding-top: 12px;
-  --padding-bottom: 12px;
-  --background-hover: var(--ion-color-light);
-  transition: background-color 0.3s;
+  --background: #ffffff;
+  --border-radius: 10px;
+  --padding-start: 15px;
+  --min-height: 60px;
+  --box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+  margin: 5px 15px;
+  border: 1px solid #f0f0f5;
 }
 
-.customer-name {
-  font-weight: 600;
-  color: var(--ion-color-dark);
+.customer-item .customer-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.customer-item ion-label p {
+  font-size: 0.85rem;
+  color: #666;
 }
 
 .points-chip {
-  --background: var(--ion-color-primary);
-  --color: var(--ion-color-primary-contrast);
+  --background: #e0f3ff;
+  --color: #007aff;
+  font-weight: 500;
+}
+
+/* Add Customer Button */
+.add-customer-btn {
+  --background: #007aff;
+  --color: #ffffff;
+  --border-radius: 10px;
+  --box-shadow: 0px 2px 6px rgba(0, 122, 255, 0.3);
+  margin: 15px;
   font-weight: 600;
 }
 
-.add-customer-btn {
-  margin: 16px;
-  --border-radius: 10px;
-  text-transform: none;
-  font-weight: 600;
+.add-customer-btn ion-icon {
+  font-size: 1.2rem;
 }

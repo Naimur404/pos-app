@@ -1,56 +1,75 @@
-.custom-modal {
-  --height: 90%;
-  --border-radius: 20px;
+/* Header Styling */
+ion-header {
+  --background: #f8f8f8;
 }
 
-.custom-modal::part(content) {
-  border-radius: 20px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+ion-header ion-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
 }
 
-.modal-header {
-  --background: var(--ion-color-primary);
-  --color: var(--ion-color-primary-contrast);
-  border-radius: 20px 20px 0 0;
+ion-button {
+  --color: #007aff; /* iOS Blue for close button */
 }
 
-.modal-header ion-title {
-  font-weight: bold;
+/* Form Styling */
+ion-content {
+  --background: #ffffff;
 }
 
-.custom-searchbar {
+/* Form Inputs */
+ion-item {
+  --background: #ffffff;
   --border-radius: 10px;
-  --box-shadow: none;
-  margin: 10px;
+  --padding-start: 15px;
+  margin: 8px 0;
+  border: 1px solid #e0e0e5;
 }
 
-.customer-list {
-  margin-top: 10px;
+ion-label {
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 500;
 }
 
-.customer-item {
-  --padding-start: 16px;
-  --padding-end: 16px;
-  --padding-top: 12px;
-  --padding-bottom: 12px;
-  --background-hover: var(--ion-color-light);
-  transition: background-color 0.3s;
+ion-input,
+ion-textarea {
+  --padding-start: 0;
+  font-size: 1rem;
+  color: #333;
 }
 
-.customer-name {
+ion-input::placeholder,
+ion-textarea::placeholder {
+  color: #aaa;
+}
+
+/* Error Messages */
+ion-note {
+  font-size: 0.8rem;
+  color: #ff3b30; /* iOS error color */
+  padding-left: 10px;
+}
+
+/* Save Button */
+ion-button {
+  --background: #007aff;
+  --color: #ffffff;
+  --border-radius: 8px;
   font-weight: 600;
-  color: var(--ion-color-dark);
+  --box-shadow: 0px 3px 8px rgba(0, 122, 255, 0.3);
 }
 
-.points-chip {
-  --background: var(--ion-color-primary);
-  --color: var(--ion-color-primary-contrast);
-  font-weight: 600;
+ion-button[disabled] {
+  opacity: 0.6;
 }
 
-.add-customer-btn {
-  margin: 16px;
-  --border-radius: 10px;
-  text-transform: none;
-  font-weight: 600;
+ion-spinner {
+  --color: #ffffff;
+}
+
+/* Padding for Form Section */
+.ion-padding {
+  padding: 15px 20px;
 }

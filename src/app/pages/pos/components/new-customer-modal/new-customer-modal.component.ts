@@ -1,7 +1,7 @@
-// new-customer-modal.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { Customer } from '../../pos.interfaces';
 
 @Component({
   selector: 'app-new-customer-modal',
@@ -10,7 +10,6 @@ import { ModalController } from '@ionic/angular';
 })
 export class NewCustomerModalComponent implements OnInit {
   customerForm: FormGroup;
-  isOpen = false;
   isSubmitting = false;
 
   constructor(
@@ -35,8 +34,10 @@ export class NewCustomerModalComponent implements OnInit {
     if (this.customerForm.valid) {
       this.isSubmitting = true;
       try {
-        // Add your submission logic here
-        const customerData = this.customerForm.value;
+        const customerData: Customer = {
+          ...this.customerForm.value,
+          points: 0 // Initialize new customer with 0 points
+        };
         await this.modalController.dismiss(customerData);
       } catch (error) {
         console.error('Error submitting form:', error);

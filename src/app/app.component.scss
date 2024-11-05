@@ -1,0 +1,37 @@
+ion-content {
+  --background: var(--ion-background-color);
+}
+
+/* Remove transition ghosts */
+.ion-page-invisible {
+  opacity: 1 !important;
+}
+
+/* Ensure smooth transitions */
+ion-content::part(scroll) {
+  background: var(--ion-background-color);
+}
+
+/* Fix for iOS transitions */
+.ios {
+  ion-modal {
+    --background: var(--ion-background-color);
+  }
+
+  .modal-wrapper {
+    background: var(--ion-background-color);
+  }
+}
+
+/* Fix for Android transitions */
+.md {
+  ion-modal {
+    --background: var(--ion-background-color);
+  }
+
+  .modal-wrapper {
+    background: var(--ion-background-color);
+  }
+}
+
+

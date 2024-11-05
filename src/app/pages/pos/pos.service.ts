@@ -163,4 +163,8 @@ export class PosService {
 
     return this.http.post(`${this.API_URL}/invoice`, payload);
   }
+
+  saveCustomer(customerData: Customer): Observable<Customer> {
+    return this.http.post<Customer>(`${this.API_URL}/customers`, customerData);
+  }
 }

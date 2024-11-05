@@ -1,6 +1,7 @@
-// customer-modal.component.ts
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Customer } from '../../pos.interfaces';
+import { ModalController } from '@ionic/angular';
+import { NewCustomerModalComponent } from '../new-customer-modal/new-customer-modal.component';
 
 @Component({
   selector: 'app-customer-modal',
@@ -11,20 +12,18 @@ export class CustomerModalComponent {
   @Input() isOpen = false;
   @Input() customersList: Customer[] = [];
   @Input() searchCustomer = '';
-  @Input() isNewCustomerModalOpen = false;  // Add this
 
   @Output() modalClose = new EventEmitter<void>();
   @Output() searchChange = new EventEmitter<string>();
   @Output() customerSelected = new EventEmitter<Customer>();
-  @Output() newCustomerClick = new EventEmitter<void>();
-  @Output() newCustomerModalClose = new EventEmitter<void>();  // Add this
-  @Output() newCustomerSaved = new EventEmitter<Customer>();   // Add this
+  @Output() newCustomerSaved = new EventEmitter<Customer>();
+
+  constructor(private modalController: ModalController) {}
 
   onSearchChange(event: any) {
     const value = event.target.value || '';
     this.searchChange.emit(value);
-   
-}
+  }
 
   closeModal() {
     this.modalClose.emit();
@@ -35,15 +34,18 @@ export class CustomerModalComponent {
     this.closeModal();
   }
 
-  openNewCustomerModal() {
-    this.newCustomerClick.emit();
-  }
+  async openNewCustomerModal() {
+    const modal = await this.modalController.create({
+      component: NewCustomerModalComponent,
+      cssClass: 'custom-modal'
+    });
 
-  closeNewCustomerModal() {
-    this.newCustomerModalClose.emit();
-  }
+    modal.onDidDismiss().then((result) => {
+      if (result.data) {
+        this.newCustomerSaved.emit(result.data);
+      }
+    });
 
-  onNewCustomerSaved(customer: any) {
-    this.newCustomerSaved.emit(customer);
+    await modal.present();
   }
 }
