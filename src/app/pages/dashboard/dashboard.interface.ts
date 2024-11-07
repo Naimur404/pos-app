@@ -9,4 +9,10 @@ export interface DashboardData {
   this_month_invoices: number;
 }
 
-
+export interface TopSale {
+  id: number;
+  medicine_name: string;
+  medicine_id: number;
+  total: string;
+  count: number;
+}

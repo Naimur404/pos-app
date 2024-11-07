@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { MenuController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-header',
@@ -17,15 +19,20 @@ export class HeaderComponent {
   @Input() title: any = '';
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private menuController: MenuController
   ) {}
+
+  async toggleMenu() {
+    await this.menuController.toggle();
+  }
 
   async goToInvoices() {
     try {
       await this.router.navigate(['/all-invoice']);
     } catch (error) {
       console.error('Navigation error:', error);
-      window.location.href = '/all';
+      window.location.href = '/dashboard';
     }
   }
   async goToIdashboard() {
@@ -33,7 +40,7 @@ export class HeaderComponent {
       await this.router.navigate(['/dashboard']);
     } catch (error) {
       console.error('Navigation error:', error);
-      window.location.href = '/all';
+      window.location.href = '/dashboard';
     }
   }
   async goToPos() {
@@ -41,7 +48,7 @@ export class HeaderComponent {
       await this.router.navigate(['/pos']);
     } catch (error) {
       console.error('Navigation error:', error);
-      window.location.href = '/all';
+      window.location.href = '/dashboard';
     }
   }
   async handleLogout() {

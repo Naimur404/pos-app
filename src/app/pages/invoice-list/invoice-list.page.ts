@@ -19,7 +19,7 @@ export class InvoiceListPage implements OnInit, OnDestroy {
   isLoading = false;
   searchQuery = '';
   selectedPaymentMethod = '';
-  paymentMethods = ['Cash', 'Card', 'Mobile Banking'];
+  paymentMethods = ['Cash', 'Bkash', 'Nagad', "Card"];
   currentPage = 1;
   hasMoreData = true;
   totalRecords = 0;

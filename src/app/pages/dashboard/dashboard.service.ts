@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { DashboardData } from './dashboard.interface';
+import { DashboardData, TopSale } from './dashboard.interface';
 import { ApiService } from '../../core/services/api.service';
 
 @Injectable({
@@ -17,5 +17,8 @@ export class DashboardService {
 
   getDashboardData(): Observable<DashboardData> {
     return this.apiService.get<DashboardData>(`api-dashbaord`);
+  }
+  getTopSlaeData(): Observable<TopSale[]> {
+    return this.apiService.get<TopSale[]>(`top-sale`);
   }
 }

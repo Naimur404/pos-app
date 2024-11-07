@@ -1,0 +1,6 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "StolenPos",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

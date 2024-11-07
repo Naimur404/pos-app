@@ -1,8 +1,12 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button  *ngIf="backButton" defaultHref="/invoices"></ion-back-button>
+      <ion-menu-button *ngIf="!backButton"></ion-menu-button>
+      <ion-back-button *ngIf="backButton" defaultHref="/invoices"></ion-back-button>
     </ion-buttons>
+    <!-- <ion-buttons slot="start">
+      <ion-back-button  *ngIf="backButton" defaultHref="/invoices"></ion-back-button>
+    </ion-buttons> -->
     <ion-title size="large">{{ user?.name || title }}</ion-title>
     <ion-buttons slot="end">
       <ion-button
@@ -15,7 +19,7 @@
         <ion-icon name="receipt-outline" slot="start"></ion-icon>
         POS
       </ion-button>
-      <ion-button
+      <!-- <ion-button
       *ngIf="dashboardButton"
       size="small"
       class="ion-margin custom-button"
@@ -24,8 +28,8 @@
       (click)="goToIdashboard()">
       <ion-icon name="bar-chart-outline"></ion-icon>
 
-    </ion-button>
-      <ion-button
+    </ion-button> -->
+      <!-- <ion-button
         *ngIf="showInvoiceButton"
         size="small"
         class="ion-margin custom-button"
@@ -34,7 +38,7 @@
         (click)="goToInvoices()">
         <ion-icon name="document-outline" slot="start"></ion-icon>
 
-      </ion-button>
+      </ion-button> -->
 
         <ion-button *ngIf="showInvoiceDetails" (click)="printInvoice()">
           <ion-icon name="print-outline" slot="icon-only"></ion-icon>

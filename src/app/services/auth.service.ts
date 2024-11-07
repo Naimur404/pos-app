@@ -97,10 +97,7 @@ export class AuthService {
     }));
   }
 
-  async isAuthenticated(): Promise<boolean> {
-    const token = await this.getToken();
-    return !!token;
-  }
+
 
   async logout(): Promise<void> {
     try {
@@ -114,5 +111,38 @@ export class AuthService {
       throw error;
     }
 }
+
+
+  isAuthenticated(): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.getToken().then(token => {
+        if (!token) {
+          resolve(false);
+          return;
+        }
+
+        this.apiService.post<{ status: boolean }>('verify', token)
+          .subscribe({
+            next: (response) => {
+              resolve(response.status == true);
+            },
+            error: (error) => {  // Make this an async function
+              console.error('Auth verification failed:', error);
+              this.storage.clear();
+              resolve(false);
+            },
+            complete: () => {
+              return !!token;
+            }
+          });
+      })
+      .catch(async (error) => {  // Also make this async if needed
+        console.error('Token retrieval failed:', error);
+        await this.storage.clear();
+        resolve(false);
+      });
+    });
+}
+
 
 }

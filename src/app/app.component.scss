@@ -1,55 +1,130 @@
-ion-content {
-  --background: var(--ion-background-color);
+:host {
+  --menu-background: #ffffff;
+  --menu-text-color: #424242;
+  --menu-active-color: var(--ion-color-primary);
+  --menu-border-radius: 16px;
+  --menu-padding: 16px;
 }
 
-/* Remove transition ghosts */
-.ion-page-invisible {
-  opacity: 1 !important;
-}
+.custom-menu {
+  --width: 300px;
+  --background: var(--menu-background);
 
-/* Ensure smooth transitions */
-ion-content::part(scroll) {
-  background: var(--ion-background-color);
-}
-
-/* Fix for iOS transitions */
-.ios {
-  ion-modal {
-    --background: var(--ion-background-color);
-  }
-
-  .modal-wrapper {
-    background: var(--ion-background-color);
+  ion-content {
+    --background: var(--menu-background);
   }
 }
 
-/* Fix for Android transitions */
-.md {
-  ion-modal {
-    --background: var(--ion-background-color);
-  }
+.menu-header {
+  padding: var(--menu-padding);
 
-  .modal-wrapper {
-    background: var(--ion-background-color);
+  .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0;
+
+    ion-avatar {
+      width: 60px;
+      height: 60px;
+    }
+
+    .user-info {
+      h2 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--menu-text-color);
+      }
+
+      p {
+        margin: 4px 0 0;
+        font-size: 14px;
+        color: var(--ion-color-medium);
+      }
+    }
   }
 }
 
-.custom-loading {
-  .loading-wrapper {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.menu-content {
+  padding: 0 var(--menu-padding);
+}
+
+.menu-section {
+  margin-bottom: 24px;
+
+  .menu-label {
+    margin: 8px 8px 4px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--ion-color-medium);
   }
 
-  .loading-content {
-    color: var(--ion-color-primary);
-    font-weight: 500;
+  ion-list {
+    background: transparent;
+    padding: 0;
+
+    ion-item {
+      --padding-start: 12px;
+      --padding-end: 12px;
+      --border-radius: 8px;
+      --background: transparent;
+      margin-bottom: 4px;
+
+      ion-icon {
+        color: var(--menu-text-color);
+        margin-right: 8px;
+      }
+
+      ion-label {
+        font-weight: 500;
+        font-size: 15px;
+        color: var(--menu-text-color);
+      }
+    }
+
+    .active-item {
+      --background: var(--menu-active-color);
+      --background-hover: var(--menu-active-color);
+
+      ion-icon, ion-label {
+        color: white !important;
+      }
+    }
+  }
+}
+
+.menu-footer {
+  padding: var(--menu-padding);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+
+  .logout-button {
+    --background: var(--ion-color-light);
+    --border-radius: 8px;
+
+    ion-icon, ion-label {
+      color: var(--ion-color-danger);
+    }
+  }
+}
+
+ion-badge {
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+
+// Optional: Add these variables to your global.scss for light/dark theme support
+:root {
+  &.light-theme {
+    --menu-background: #ffffff;
+    --menu-text-color: #424242;
   }
 
-  ion-spinner {
-    width: 40px;
-    height: 40px;
-    color: var(--ion-color-primary);
+  &.dark-theme {
+    --menu-background: #1a1a1a;
+    --menu-text-color: #ffffff;
   }
 }
