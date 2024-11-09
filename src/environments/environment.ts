@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.68.54:8000/api',
+  apiUrl: 'http://127.0.0.1:8000/api',
   // You can add other API-related configuration here
   version: '1.0.0',
   timeout: 30000, // API timeout in milliseconds

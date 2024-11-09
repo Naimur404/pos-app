@@ -12,6 +12,41 @@ import { ModalController } from '@ionic/angular';
 import { InvoiceComponent } from './components/invoice.component';
 import { LoadingService } from '../../services/loading.service';
 
+interface BluetoothDevice {
+  name: string;
+  address: string;
+  class?: number;
+  id?: string;
+  uuid?: string;
+}
+interface InvoiceDetail {
+  medicine_name: string;
+  quantity: number;
+  rate: number;
+}
+interface InvoiceData {
+  id: number;
+  outlet?: {
+    outlet_name: string;
+    address: string;
+    mobile: string;
+  };
+  sale_date: string;
+  added_by: string;
+  payment_method_id: string;
+  invoice_details: InvoiceDetail[];
+  sub_total: number;
+  total_discount: number;
+  vat: number;
+  grand_total: number;
+  given_amount: number;
+  payable_amount: number;
+  customer?: {
+    name: string;
+    points: number;
+  };
+  earn_point?: number;
+}
 
 @Component({
   selector: 'app-pos',
@@ -389,7 +424,7 @@ export class PosPage implements OnInit, OnDestroy {
       changeAmount: this.changeToReturn,
       redeemedPoints: this.redeemedPoints           // Added
     };
-
+ console.log(invoice);
     try {
       await this.loadingService.showLoading();
 
@@ -407,28 +442,16 @@ export class PosPage implements OnInit, OnDestroy {
     }
   }
 
-  async showInvoice(invoiceData: any) {
+  async showInvoice(invoiceData: InvoiceData) {
     const modal = await this.modalController.create({
       component: InvoiceComponent,
       componentProps: {
         invoice: invoiceData
-      }
-    });
-
-    // Listen for the modal to be presented
-    modal.addEventListener('ionModalDidPresent', () => {
-      // Small timeout to ensure content is rendered
-      setTimeout(() => {
-        const printContent = document.querySelector('.invoice-content')?.innerHTML;
-        if (printContent) {
-          this.printService.printInvoice(printContent);
-        }
-      }, 500);
+      },
+      cssClass: 'receipt-modal'
     });
 
     await modal.present();
-
-    const { data } = await modal.onWillDismiss();
   }
 
     // Either navigate to a new page or show in a modal

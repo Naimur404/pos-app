@@ -1,0 +1,114 @@
+<app-header
+  [user]="''"
+  [title]="'All Invoices'"
+  [showInvoiceButton]="false"
+  [showPosButton]="true"
+  [showInvoiceDetails]="false">
+</app-header>
+
+<ion-content [fullscreen]="true" class="bg-gray-50">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="max-w-4xl mx-auto p-4">
+    <!-- Search and New Exchange Button Row -->
+    <div class="flex items-center gap-4 mb-4">
+      <div class="flex-1">
+        <ion-searchbar
+          [(ngModel)]="searchTerm"
+          placeholder="Search invoices..."
+          (ionInput)="filterExchanges()"
+          class="bg-white rounded-lg shadow-sm"
+          animated>
+        </ion-searchbar>
+      </div>
+      <div class="ion-text-center">
+        <ion-button (click)="addNewExchange()" fill="solid" color="primary" class="font-medium">
+          <ion-icon slot="start" name="add-outline"></ion-icon>
+          New Exchange
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Exchange List -->
+    <ion-list *ngIf="(searchTerm ? filteredExchanges : exchanges).length > 0" class="space-y-4">
+      <ion-card *ngFor="let exchange of (searchTerm ? filteredExchanges : exchanges)" class="rounded-lg shadow-md overflow-hidden">
+        <ion-card-header class="bg-white border-b pb-3">
+          <div class="flex justify-between items-center">
+            <div>
+              <ion-card-subtitle class="text-sm text-gray-500">
+                Invoice #{{exchange.original_invoice_id}}
+              </ion-card-subtitle>
+              <ion-card-title class="text-lg font-semibold text-gray-800">
+                {{exchange.customer.name}}
+              </ion-card-title>
+            </div>
+            <ion-chip
+            color="success"
+            class="rounded-full">
+            <ion-icon name="card"></ion-icon>
+            <ion-label>{{exchange.id}}</ion-label>
+        </ion-chip>
+          </div>
+        </ion-card-header>
+
+        <ion-card-content class="p-4">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6" class="border-r">
+                <div class="px-4">
+                  <h3 class="text-sm font-medium text-gray-500">Total Amount</h3>
+                  <p class="text-xl font-bold text-gray-800">
+                    ৳{{exchange.grand_total}}
+                  </p>
+                </div>
+              </ion-col>
+              <ion-col size="6">
+                <div class="px-4">
+                  <h3 class="text-sm font-medium text-gray-500">Date</h3>
+                  <p class="text-xl font-bold">
+                    {{exchange.created_at | date:'MM/dd/yyyy'}}
+                  </p>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <div class="flex justify-end mt-4 pt-3 border-t">
+            <ion-button (click)="viewDetails(exchange)" fill="clear" color="primary">
+              <ion-icon slot="start" name="eye-outline"></ion-icon>
+              View Details
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+
+    <!-- No Results Message -->
+    <div *ngIf="(searchTerm ? filteredExchanges : exchanges).length === 0 && !loading"
+         class="text-center p-8 bg-white rounded-lg shadow-sm">
+         <div class="ion-text-center">
+      <ion-icon name="document-outline"
+                class="text-4xl text-gray-400 mb-2">
+      </ion-icon>
+      <h4 class="text-gray-500 font-medium">No exchanges found</h4>
+      <p class="text-gray-400">Try adjusting your search criteria</p>
+    </div>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="error" class="text-center p-4 bg-red-50 rounded-lg border border-red-100">
+      <h4 class="text-red-600">{{error}}</h4>
+      <ion-button (click)="retryLoad()" fill="clear" color="primary">
+        Retry
+      </ion-button>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div *ngIf="loading" class="text-center p-4">
+      <ion-spinner></ion-spinner>
+      <p class="text-gray-500 mt-2">Loading exchanges...</p>
+    </div>
+  </div>
+</ion-content>

@@ -10,6 +10,8 @@ interface InvoiceProduct {
   product_id: number;
   quantity: number;
   price: number;
+  name: string;
+  stock: any;
 }
 
 interface InvoicePayload {
@@ -165,6 +167,8 @@ export class PosService {
       customer_id: invoice.customer?.id,
       products: invoice.products.map(product => ({
         product_id: product.id,
+        stock: product.quantity,
+        name: product.name,
         quantity: product.quantity || 1,
         price: product.price,
         stock_id: product.stock_id,

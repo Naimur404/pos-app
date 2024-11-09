@@ -1,0 +1,70 @@
+.invoice-card {
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.amount-text {
+  font-weight: 600;
+  color: var(--ion-color-dark);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.payment-chip {
+  margin: 0;
+}
+
+ion-icon {
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+ion-card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+ion-chip {
+  cursor: pointer;
+}
+
+ion-searchbar {
+  padding: 12px;
+  --box-shadow: none;
+  --background: var(--ion-color-light);
+}
+
+ion-card-content ion-grid {
+  padding: 0;
+}
+
+ion-text p {
+  margin: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.no-results {
+  margin-top: 2rem;
+}
+
+.no-results h5 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.end-message {
+  margin: 1rem 0;
+  color: var(--ion-color-medium);
+}
+
+.custom-button {
+  --background: #ff9800;
+  --color: #ffffff;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --border-radius: 8px;
+}

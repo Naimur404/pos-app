@@ -403,16 +403,3 @@ ion-text[slot="end"]::before {
   border-bottom: 1px solid black;
 }
 
-@media print {
-  body * {
-    visibility: hidden;
-  }
-  .receipt, .receipt * {
-    visibility: visible;
-  }
-  .receipt {
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
-}

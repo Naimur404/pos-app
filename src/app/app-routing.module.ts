@@ -46,9 +46,27 @@ const routes: Routes = [
      canActivate: [AuthGuard]
   },
   {
+    path: 'exchange',
+    loadChildren: () => import('./pages/exchange/exchange.module').then( m => m.ExchangePageModule),
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'exchange-details/:id',
+    loadChildren: () => import('./pages/exchange-details/exchange-details.module').then( m => m.ExchangeDetailsPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'exchange-products',
+    loadChildren: () => import('./pages/exchange-products/exchange-products.module').then( m => m.ExchangeProductsPageModule)
+  },
+
+  {
     path: '**',
     redirectTo: 'login'
   },
+
+
 
 ];
 
